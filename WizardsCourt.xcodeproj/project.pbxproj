@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		65B3FF0D1BD8990E00873E14 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF0C1BD8990E00873E14 /* main.cpp */; };
+		65B3FF181BD8999C00873E14 /* DGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF161BD8999C00873E14 /* DGL.cpp */; };
+		65B3FF2D1BD899CA00873E14 /* Face.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF191BD899CA00873E14 /* Face.cpp */; };
+		65B3FF2E1BD899CA00873E14 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF1B1BD899CA00873E14 /* Game.cpp */; };
+		65B3FF2F1BD899CA00873E14 /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF1D1BD899CA00873E14 /* Item.cpp */; };
+		65B3FF301BD899CA00873E14 /* ManifestParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF1F1BD899CA00873E14 /* ManifestParser.cpp */; };
+		65B3FF311BD899CA00873E14 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF211BD899CA00873E14 /* Matrix.cpp */; };
+		65B3FF321BD899CA00873E14 /* ObjParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF231BD899CA00873E14 /* ObjParser.cpp */; };
+		65B3FF331BD899CA00873E14 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF251BD899CA00873E14 /* Scene.cpp */; };
+		65B3FF341BD899CA00873E14 /* TextureCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF271BD899CA00873E14 /* TextureCoordinate.cpp */; };
+		65B3FF351BD899CA00873E14 /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF291BD899CA00873E14 /* Vector.cpp */; };
+		65B3FF361BD899CA00873E14 /* Vertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF2B1BD899CA00873E14 /* Vertex.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +36,31 @@
 /* Begin PBXFileReference section */
 		65B3FF091BD8990E00873E14 /* WizardsCourt */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WizardsCourt; sourceTree = BUILT_PRODUCTS_DIR; };
 		65B3FF0C1BD8990E00873E14 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		65B3FF131BD8992300873E14 /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = models; sourceTree = "<group>"; };
+		65B3FF141BD8992300873E14 /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
+		65B3FF161BD8999C00873E14 /* DGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DGL.cpp; sourceTree = "<group>"; };
+		65B3FF171BD8999C00873E14 /* DGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGL.h; sourceTree = "<group>"; };
+		65B3FF191BD899CA00873E14 /* Face.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Face.cpp; sourceTree = "<group>"; };
+		65B3FF1A1BD899CA00873E14 /* Face.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Face.h; sourceTree = "<group>"; };
+		65B3FF1B1BD899CA00873E14 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
+		65B3FF1C1BD899CA00873E14 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		65B3FF1D1BD899CA00873E14 /* Item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Item.cpp; sourceTree = "<group>"; };
+		65B3FF1E1BD899CA00873E14 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		65B3FF1F1BD899CA00873E14 /* ManifestParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ManifestParser.cpp; sourceTree = "<group>"; };
+		65B3FF201BD899CA00873E14 /* ManifestParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManifestParser.h; sourceTree = "<group>"; };
+		65B3FF211BD899CA00873E14 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
+		65B3FF221BD899CA00873E14 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		65B3FF231BD899CA00873E14 /* ObjParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjParser.cpp; sourceTree = "<group>"; };
+		65B3FF241BD899CA00873E14 /* ObjParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjParser.h; sourceTree = "<group>"; };
+		65B3FF251BD899CA00873E14 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		65B3FF261BD899CA00873E14 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		65B3FF271BD899CA00873E14 /* TextureCoordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureCoordinate.cpp; sourceTree = "<group>"; };
+		65B3FF281BD899CA00873E14 /* TextureCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCoordinate.h; sourceTree = "<group>"; };
+		65B3FF291BD899CA00873E14 /* Vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector.cpp; sourceTree = "<group>"; };
+		65B3FF2A1BD899CA00873E14 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		65B3FF2B1BD899CA00873E14 /* Vertex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vertex.cpp; sourceTree = "<group>"; };
+		65B3FF2C1BD899CA00873E14 /* Vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
+		65B3FF371BD899DE00873E14 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +93,32 @@
 		65B3FF0B1BD8990E00873E14 /* WizardsCourt */ = {
 			isa = PBXGroup;
 			children = (
+				65B3FF131BD8992300873E14 /* models */,
+				65B3FF141BD8992300873E14 /* textures */,
+				65B3FF371BD899DE00873E14 /* main.h */,
 				65B3FF0C1BD8990E00873E14 /* main.cpp */,
+				65B3FF161BD8999C00873E14 /* DGL.cpp */,
+				65B3FF171BD8999C00873E14 /* DGL.h */,
+				65B3FF191BD899CA00873E14 /* Face.cpp */,
+				65B3FF1A1BD899CA00873E14 /* Face.h */,
+				65B3FF1B1BD899CA00873E14 /* Game.cpp */,
+				65B3FF1C1BD899CA00873E14 /* Game.h */,
+				65B3FF1D1BD899CA00873E14 /* Item.cpp */,
+				65B3FF1E1BD899CA00873E14 /* Item.h */,
+				65B3FF1F1BD899CA00873E14 /* ManifestParser.cpp */,
+				65B3FF201BD899CA00873E14 /* ManifestParser.h */,
+				65B3FF211BD899CA00873E14 /* Matrix.cpp */,
+				65B3FF221BD899CA00873E14 /* Matrix.h */,
+				65B3FF231BD899CA00873E14 /* ObjParser.cpp */,
+				65B3FF241BD899CA00873E14 /* ObjParser.h */,
+				65B3FF251BD899CA00873E14 /* Scene.cpp */,
+				65B3FF261BD899CA00873E14 /* Scene.h */,
+				65B3FF271BD899CA00873E14 /* TextureCoordinate.cpp */,
+				65B3FF281BD899CA00873E14 /* TextureCoordinate.h */,
+				65B3FF291BD899CA00873E14 /* Vector.cpp */,
+				65B3FF2A1BD899CA00873E14 /* Vector.h */,
+				65B3FF2B1BD899CA00873E14 /* Vertex.cpp */,
+				65B3FF2C1BD899CA00873E14 /* Vertex.h */,
 			);
 			path = WizardsCourt;
 			sourceTree = "<group>";
@@ -118,7 +179,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65B3FF311BD899CA00873E14 /* Matrix.cpp in Sources */,
+				65B3FF341BD899CA00873E14 /* TextureCoordinate.cpp in Sources */,
+				65B3FF2D1BD899CA00873E14 /* Face.cpp in Sources */,
 				65B3FF0D1BD8990E00873E14 /* main.cpp in Sources */,
+				65B3FF181BD8999C00873E14 /* DGL.cpp in Sources */,
+				65B3FF351BD899CA00873E14 /* Vector.cpp in Sources */,
+				65B3FF2E1BD899CA00873E14 /* Game.cpp in Sources */,
+				65B3FF2F1BD899CA00873E14 /* Item.cpp in Sources */,
+				65B3FF331BD899CA00873E14 /* Scene.cpp in Sources */,
+				65B3FF361BD899CA00873E14 /* Vertex.cpp in Sources */,
+				65B3FF321BD899CA00873E14 /* ObjParser.cpp in Sources */,
+				65B3FF301BD899CA00873E14 /* ManifestParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

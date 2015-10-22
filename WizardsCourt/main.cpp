@@ -6,10 +6,13 @@
 //  Copyright (c) 2015 Daniel Fuller. All rights reserved.
 //
 
-#include <iostream>
+#include "main.h"
+#include "Game.h"
+using namespace std;
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+
+int main (int argc, char **argv)
+{
+    Game game = Game();
+    return game.Run();
 }
