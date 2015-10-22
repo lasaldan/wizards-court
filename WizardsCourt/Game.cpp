@@ -18,7 +18,6 @@ int angle;
 Game::Game() {
     viewport = NULL;
     Running = true;
-    tireRotation = 0; // For Project 3
 }
 
 
@@ -31,8 +30,9 @@ Game::Run() {
         return -1;
     }
     
-    LoadAssets("parking_lot", parking_lot);
+    LoadAssets("wizardscourt", playarea);
     InitializeScene();
+    SetupView();
     
     SDL_Event Event;
     
@@ -57,7 +57,10 @@ Game::Run() {
 void
 Game::InitializeScene() {
     
-    //Item& car = parking_lot.Get("car");
+    Item& board = playarea.Get("board");
+    Item& body = playarea.Get("body");
+    board.scale(.06);
+    body.scale(.06);
 
 }
 
@@ -76,7 +79,7 @@ Game::Init() {
 
     
     // Create viewport
-    if((viewport = SDL_CreateWindow("Parking Lot", SCREEN_LOCATION_X, SCREEN_LOCATION_Y, SCREEN_WIDTH, SCREEN_HEIGHT, 0 | SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE)) == NULL) {
+    if((viewport = SDL_CreateWindow("Wizards Court", SCREEN_LOCATION_X, SCREEN_LOCATION_Y, SCREEN_WIDTH, SCREEN_HEIGHT, 0 | SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE)) == NULL) {
         return false;
     }
     
@@ -105,16 +108,37 @@ Game::Init() {
  ************/
 void
 Game::HandleEvent(SDL_Event &e) {
-
-    // Close the window if the X is clicked
-    if (e.type == SDL_QUIT) {
-        Running = false;
-    }
     
-    if (e.type == SDL_KEYUP) {
-        Running = false;
+    switch( e.type ){
+            
+        case SDL_KEYDOWN:
+        switch( e.key.keysym.sym ) {
+            case SDLK_LEFT:
+                cout << "LEFT" << endl;
+                DGL::setMode(CAMERA);
+                DGL::translateX(-.1);
+                break;
+            case SDLK_RIGHT:
+                cout << "RIGHT" << endl;
+                DGL::setMode(CAMERA);
+                DGL::translateX(.1);
+                break;
+            case SDLK_UP:
+                cout << "UP" << endl;
+                break;
+            case SDLK_DOWN:
+                cout << "DOWN" << endl;
+                break;
+            default:
+                break;
+        }
+        break;
+            
+        case SDL_QUIT:
+            Running = false;
+            break;
     }
-    
+    /*
     
     // Capture Button presses
     else if(e.type == SDL_JOYBUTTONDOWN) {
@@ -125,18 +149,6 @@ Game::HandleEvent(SDL_Event &e) {
         buttons = 0;
     }
     
-    
-    // Capture Axis Motion
-    else if(e.type == SDL_JOYAXISMOTION) {
-        if(e.jaxis.axis == LEFT_JOY_X)
-            cameraDX = e.jaxis.value;
-        if(e.jaxis.axis == LEFT_JOY_Y)
-            cameraDZ = e.jaxis.value;
-        if(e.jaxis.axis == RIGHT_JOY_X)
-            cameraRY = e.jaxis.value;
-        if(e.jaxis.axis == RIGHT_JOY_Y)
-            cameraRZ = e.jaxis.value;
-    }
     
     // Capture Hat Motion
     else if(e.type == SDL_JOYHATMOTION) {
@@ -153,72 +165,22 @@ Game::HandleEvent(SDL_Event &e) {
             inputs = 0;
         }
     }
+     */
 }
 
 void Game::Update() {
     
     DGL::setMode( MODEL );
-    Item& car = parking_lot.Get("car");
     
-    if(inputs & DPAD_LEFT && tireRotation > -30) {
-        tireRotation -= 3;
-        parking_lot.Get("tire_front_driver").rotateY(-3);
-        parking_lot.Get("tire_front_passenger").rotateY(-3);
-    }
-    else if(inputs & DPAD_RIGHT && tireRotation < 30) {
-        tireRotation += 3;
-        parking_lot.Get("tire_front_driver").rotateY(3);
-        parking_lot.Get("tire_front_passenger").rotateY(3);
-    }
-    
-    if(buttons & GAS_BUTTON) {
-        //car.translateZ(.1);
-        
-        float newX = car.translationX;
-        float newZ = car.translationZ;
-        
-        newX = sin(DGL::toRadians(car.rotationY))/30;
-        newZ = cos(DGL::toRadians(car.rotationY))/30;
-        
-        car.translateX( newX );
-        car.translateZ( -newZ );
-        
-        car.rotateY(tireRotation / 20);
-        
-        UpdateTireLocations();
-        
-
-    }
-    if(buttons & BRAKE_BUTTON) {
-        
-        float newX = car.translationX;
-        float newZ = car.translationZ;
-        
-        newX = -sin(DGL::toRadians(car.rotationY))/30;
-        newZ = -cos(DGL::toRadians(car.rotationY))/30;
-        
-        car.translateX( newX );
-        car.translateZ( -newZ );
-        
-        car.rotateY(-tireRotation / 20);
-        
-        UpdateTireLocations();
-    }
-    
+    Item& board = playarea.Get("board");
+    Item& body = playarea.Get("body");
+    board.rotateY(.3);
+    body.rotateY(.3);
+    // adjust model
     
     DGL::setMode( CAMERA );
     
-    if(cameraRY > 1024 || cameraRY < -1024) {
-        DGL::rotateY(cameraRY / 10000);
-    }
-    if(cameraDX > 1024 || cameraDX < -1024)
-        DGL::translateX( cameraDX / 100000 );
-    
-    if(cameraDZ > 1024 || cameraDZ < -1024)
-        DGL::translateZ( cameraDZ / 100000 );
-    
-    if(cameraRZ > 1024 || cameraRZ < -1024)
-        DGL::rotateX(cameraRZ/100000);
+    // adjust camera
 }
 
 
@@ -229,7 +191,7 @@ void
 Game::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    DGL::drawScene( parking_lot );
+    DGL::drawScene( playarea );
     
     SDL_GL_SwapWindow(viewport);
 }
@@ -251,9 +213,6 @@ Game::Cleanup() {
 void
 Game::SetupView() {
     DGL::setMode( CAMERA );
-    DGL::translateZ( 2 );
-    DGL::translateX( 0 );
-    DGL::translateY( -1 );
 }
 
 

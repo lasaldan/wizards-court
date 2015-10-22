@@ -1,0 +1,3 @@
+#varname model texture
+board models/board.obj textures/board_cartoon.png
+body models/body.obj textures/body_cartoon.png

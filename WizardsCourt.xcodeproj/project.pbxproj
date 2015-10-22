@@ -19,6 +19,13 @@
 		65B3FF341BD899CA00873E14 /* TextureCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF271BD899CA00873E14 /* TextureCoordinate.cpp */; };
 		65B3FF351BD899CA00873E14 /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF291BD899CA00873E14 /* Vector.cpp */; };
 		65B3FF361BD899CA00873E14 /* Vertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF2B1BD899CA00873E14 /* Vertex.cpp */; };
+		65B3FF391BD8A06D00873E14 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B3FF381BD8A06D00873E14 /* GLUT.framework */; };
+		65B3FF3B1BD8A07400873E14 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B3FF3A1BD8A07400873E14 /* OpenGL.framework */; };
+		65B3FF3D1BD8A07A00873E14 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B3FF3C1BD8A07A00873E14 /* Cocoa.framework */; };
+		65B3FF3F1BD8A0DD00873E14 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B3FF3E1BD8A0DD00873E14 /* SDL2.framework */; };
+		65B3FF441BD8A16B00873E14 /* libSOIL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B3FF421BD8A16B00873E14 /* libSOIL.a */; };
+		65B3FF451BD8A16B00873E14 /* libSOIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B3FF431BD8A16B00873E14 /* libSOIL.dylib */; };
+		65B3FF4A1BD8A51500873E14 /* DGLCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF491BD8A51500873E14 /* DGLCamera.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,6 +68,16 @@
 		65B3FF2B1BD899CA00873E14 /* Vertex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vertex.cpp; sourceTree = "<group>"; };
 		65B3FF2C1BD899CA00873E14 /* Vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		65B3FF371BD899DE00873E14 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		65B3FF381BD8A06D00873E14 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		65B3FF3A1BD8A07400873E14 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		65B3FF3C1BD8A07A00873E14 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		65B3FF3E1BD8A0DD00873E14 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		65B3FF421BD8A16B00873E14 /* libSOIL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSOIL.a; path = ../libSOIL/libSOIL.a; sourceTree = "<group>"; };
+		65B3FF431BD8A16B00873E14 /* libSOIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSOIL.dylib; path = ../libSOIL/libSOIL.dylib; sourceTree = "<group>"; };
+		65B3FF461BD8A1A700873E14 /* SOIL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SOIL.h; sourceTree = "<group>"; };
+		65B3FF471BD8A2F800873E14 /* manifest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = manifest; sourceTree = "<group>"; };
+		65B3FF481BD8A51500873E14 /* DGLCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DGLCamera.h; path = "../../wizards-court/wizards-court/DGLCamera.h"; sourceTree = "<group>"; };
+		65B3FF491BD8A51500873E14 /* DGLCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DGLCamera.cpp; path = "../../wizards-court/wizards-court/DGLCamera.cpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +85,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65B3FF441BD8A16B00873E14 /* libSOIL.a in Frameworks */,
+				65B3FF451BD8A16B00873E14 /* libSOIL.dylib in Frameworks */,
+				65B3FF3F1BD8A0DD00873E14 /* SDL2.framework in Frameworks */,
+				65B3FF3D1BD8A07A00873E14 /* Cocoa.framework in Frameworks */,
+				65B3FF3B1BD8A07400873E14 /* OpenGL.framework in Frameworks */,
+				65B3FF391BD8A06D00873E14 /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +100,12 @@
 		65B3FF001BD8990E00873E14 = {
 			isa = PBXGroup;
 			children = (
+				65B3FF421BD8A16B00873E14 /* libSOIL.a */,
+				65B3FF431BD8A16B00873E14 /* libSOIL.dylib */,
+				65B3FF3E1BD8A0DD00873E14 /* SDL2.framework */,
+				65B3FF3C1BD8A07A00873E14 /* Cocoa.framework */,
+				65B3FF3A1BD8A07400873E14 /* OpenGL.framework */,
+				65B3FF381BD8A06D00873E14 /* GLUT.framework */,
 				65B3FF0B1BD8990E00873E14 /* WizardsCourt */,
 				65B3FF0A1BD8990E00873E14 /* Products */,
 			);
@@ -95,10 +124,13 @@
 			children = (
 				65B3FF131BD8992300873E14 /* models */,
 				65B3FF141BD8992300873E14 /* textures */,
+				65B3FF471BD8A2F800873E14 /* manifest */,
 				65B3FF371BD899DE00873E14 /* main.h */,
 				65B3FF0C1BD8990E00873E14 /* main.cpp */,
 				65B3FF161BD8999C00873E14 /* DGL.cpp */,
 				65B3FF171BD8999C00873E14 /* DGL.h */,
+				65B3FF481BD8A51500873E14 /* DGLCamera.h */,
+				65B3FF491BD8A51500873E14 /* DGLCamera.cpp */,
 				65B3FF191BD899CA00873E14 /* Face.cpp */,
 				65B3FF1A1BD899CA00873E14 /* Face.h */,
 				65B3FF1B1BD899CA00873E14 /* Game.cpp */,
@@ -119,6 +151,7 @@
 				65B3FF2A1BD899CA00873E14 /* Vector.h */,
 				65B3FF2B1BD899CA00873E14 /* Vertex.cpp */,
 				65B3FF2C1BD899CA00873E14 /* Vertex.h */,
+				65B3FF461BD8A1A700873E14 /* SOIL.h */,
 			);
 			path = WizardsCourt;
 			sourceTree = "<group>";
@@ -189,6 +222,7 @@
 				65B3FF2F1BD899CA00873E14 /* Item.cpp in Sources */,
 				65B3FF331BD899CA00873E14 /* Scene.cpp in Sources */,
 				65B3FF361BD899CA00873E14 /* Vertex.cpp in Sources */,
+				65B3FF4A1BD8A51500873E14 /* DGLCamera.cpp in Sources */,
 				65B3FF321BD899CA00873E14 /* ObjParser.cpp in Sources */,
 				65B3FF301BD899CA00873E14 /* ManifestParser.cpp in Sources */,
 			);
@@ -277,6 +311,14 @@
 		65B3FF111BD8990E00873E14 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Daniel/workspace/libSOIL,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -284,6 +326,14 @@
 		65B3FF121BD8990E00873E14 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Daniel/workspace/libSOIL,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -307,6 +357,7 @@
 				65B3FF121BD8990E00873E14 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -15,12 +15,10 @@
 #include <SDL2/SDL.h>
 #include <OpenGL/gl3.h>
 #include <OpenGL/glu.h>
-#include "Camera.h"
 #include <map>
 
 class Scene {
 private:
-    Camera camera;
 public:
     Scene();
     std::map<std::string, Item> Items;

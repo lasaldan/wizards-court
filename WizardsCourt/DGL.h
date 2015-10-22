@@ -11,7 +11,6 @@
 
 #include <stdio.h>
 #include "Matrix.h"
-#include "Transformation.h"
 #include "Face.h"
 #include "Vector.h"
 #include "Vertex.h"

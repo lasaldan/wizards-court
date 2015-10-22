@@ -63,7 +63,7 @@ DGL::init() {
     perspective = Matrix::Identity();
     
     lookAtLocation = Vertex(0,0,0);
-    cameraLocation = Vertex(0,2,8);
+    cameraLocation = Vertex(30,22,28);
     up = Vector(0,1,0);
     
     camera = DGLCamera();
@@ -125,25 +125,8 @@ DGL::translateX(float val) {
             break;
             
         case CAMERA:
-            /*
-            camera.position.x += val;
+            camera.translateX(val);
             viewMatrixDirty = true;
-            */
-            Vector from = Vector(cameraLocation.x, cameraLocation.y, cameraLocation.z);
-            Vector to = Vector(lookAtLocation.x, lookAtLocation.y, lookAtLocation.z);
-            Vector direction = Vector::Normalize( Vector::Cross( Vector::Minus(to, from), up ) );
-            
-            float shiftX = direction.x * val;
-            float shiftZ = direction.z * val;
-            
-            cameraLocation.x += shiftX;
-            cameraLocation.z += shiftZ;
-            
-            lookAtLocation.x += shiftX;
-            lookAtLocation.z += shiftZ;
-            
-            viewMatrixDirty = true;
-            
             break;
     }
 }
@@ -604,7 +587,7 @@ DGL::worldToView( Vertex v ) {
                  viewTransformation.Get(2,2) * v.getZ() +
                  viewTransformation.Get(2,3)) / perspectiveDivisor;
     
-    return Vertex(x, y, -z/30); // Invert Z because it's weird
+    return Vertex(x, y, -z/10); // Invert Z because it's weird
 }
 
 
@@ -631,9 +614,9 @@ DGL::lookAt(Vertex v) {
 void
 DGL::setPerspective() {
     
-    float d = cameraLocation.distanceFrom(lookAtLocation);
+    float d = camera.position.distanceFrom(camera.lookat);
     //float d = 2;
-    cout << "d:" << d << endl;
+    //cout << "d:" << d << endl;
     
     perspective.Set( 3, 2, -1/d );
     
@@ -689,16 +672,16 @@ DGL::calculateViewTransformation() {
     
     Matrix changeOfBase = Matrix::Identity();
     
-    Vector from = Vector(cameraLocation.x, cameraLocation.y, cameraLocation.z);
-    Vector to = Vector(lookAtLocation.x, lookAtLocation.y, lookAtLocation.z);
+    Vector from = Vector(camera.position.x, camera.position.y, camera.position.z);
+    Vector to = Vector(camera.lookat.x, camera.lookat.y, camera.lookat.z);
     
     Vector N = Vector::Normalize( Vector::Minus( from, to ));
     Vector U = Vector::Normalize( Vector::Cross( up, N ));
     Vector V = Vector::Normalize( Vector::Cross( N, U ));
     
-    viewTranslate.Set( 0, 3, -lookAtLocation.x);
-    viewTranslate.Set( 1, 3, -lookAtLocation.y);
-    viewTranslate.Set( 2, 3, -lookAtLocation.z);
+    viewTranslate.Set( 0, 3, -camera.lookat.x);
+    viewTranslate.Set( 1, 3, -camera.lookat.y);
+    viewTranslate.Set( 2, 3, -camera.lookat.z);
     
     changeOfBase.Set( 0, 0, U.x);
     changeOfBase.Set( 0, 1, U.y);
