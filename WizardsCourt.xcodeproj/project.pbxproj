@@ -25,7 +25,7 @@
 		65B3FF3F1BD8A0DD00873E14 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B3FF3E1BD8A0DD00873E14 /* SDL2.framework */; };
 		65B3FF441BD8A16B00873E14 /* libSOIL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B3FF421BD8A16B00873E14 /* libSOIL.a */; };
 		65B3FF451BD8A16B00873E14 /* libSOIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B3FF431BD8A16B00873E14 /* libSOIL.dylib */; };
-		65B3FF4A1BD8A51500873E14 /* DGLCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF491BD8A51500873E14 /* DGLCamera.cpp */; };
+		65B3FF4E1BD8BD6D00873E14 /* DGLCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF4C1BD8BD6D00873E14 /* DGLCamera.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -76,8 +76,9 @@
 		65B3FF431BD8A16B00873E14 /* libSOIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSOIL.dylib; path = ../libSOIL/libSOIL.dylib; sourceTree = "<group>"; };
 		65B3FF461BD8A1A700873E14 /* SOIL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SOIL.h; sourceTree = "<group>"; };
 		65B3FF471BD8A2F800873E14 /* manifest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = manifest; sourceTree = "<group>"; };
-		65B3FF481BD8A51500873E14 /* DGLCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DGLCamera.h; path = "../../wizards-court/wizards-court/DGLCamera.h"; sourceTree = "<group>"; };
-		65B3FF491BD8A51500873E14 /* DGLCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DGLCamera.cpp; path = "../../wizards-court/wizards-court/DGLCamera.cpp"; sourceTree = "<group>"; };
+		65B3FF4B1BD8BD1700873E14 /* wizards-court */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "wizards-court"; path = "../../wizards-court/wizards-court"; sourceTree = "<group>"; };
+		65B3FF4C1BD8BD6D00873E14 /* DGLCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DGLCamera.cpp; sourceTree = "<group>"; };
+		65B3FF4D1BD8BD6D00873E14 /* DGLCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGLCamera.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,10 +130,11 @@
 				65B3FF0C1BD8990E00873E14 /* main.cpp */,
 				65B3FF161BD8999C00873E14 /* DGL.cpp */,
 				65B3FF171BD8999C00873E14 /* DGL.h */,
-				65B3FF481BD8A51500873E14 /* DGLCamera.h */,
-				65B3FF491BD8A51500873E14 /* DGLCamera.cpp */,
+				65B3FF4B1BD8BD1700873E14 /* wizards-court */,
 				65B3FF191BD899CA00873E14 /* Face.cpp */,
 				65B3FF1A1BD899CA00873E14 /* Face.h */,
+				65B3FF4C1BD8BD6D00873E14 /* DGLCamera.cpp */,
+				65B3FF4D1BD8BD6D00873E14 /* DGLCamera.h */,
 				65B3FF1B1BD899CA00873E14 /* Game.cpp */,
 				65B3FF1C1BD899CA00873E14 /* Game.h */,
 				65B3FF1D1BD899CA00873E14 /* Item.cpp */,
@@ -222,7 +224,7 @@
 				65B3FF2F1BD899CA00873E14 /* Item.cpp in Sources */,
 				65B3FF331BD899CA00873E14 /* Scene.cpp in Sources */,
 				65B3FF361BD899CA00873E14 /* Vertex.cpp in Sources */,
-				65B3FF4A1BD8A51500873E14 /* DGLCamera.cpp in Sources */,
+				65B3FF4E1BD8BD6D00873E14 /* DGLCamera.cpp in Sources */,
 				65B3FF321BD899CA00873E14 /* ObjParser.cpp in Sources */,
 				65B3FF301BD899CA00873E14 /* ManifestParser.cpp in Sources */,
 			);
