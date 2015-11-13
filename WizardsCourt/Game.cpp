@@ -18,6 +18,10 @@ int angle;
 Game::Game() {
     viewport = NULL;
     Running = true;
+    selectionArea.resize(16);
+    selectedPiece = NULL;
+    mode = GAME_MODE_SELECTION;
+    turn = PLAYER_1;
 }
 
 
@@ -35,6 +39,8 @@ Game::Run() {
     SetupView();
     
     while(Running) {
+        
+        loopcount++;
         
         gamepad.PollInputs();
         if(gamepad.ShouldQuit())
@@ -100,78 +106,39 @@ Game::Init() {
     SDL_JoystickEventState(SDL_ENABLE);
     gamepad.SetDevice( SDL_JoystickOpen(0) );
     
+    pieces = GeneratePieces();
+    for(int i = 0; i < 16; i++) {
+        selectionArea[i] = &(pieces[i]);
+    }
+    
     DGL::init();
     
     return true;
 }
 
-
-/************
- * Captures input from keyboard, mouse and gamepad
- ************/
-void
-Game::HandleEvent(SDL_Event &e) {
-    
-    switch( e.type ){
-            
-        case SDL_KEYDOWN:
-        switch( e.key.keysym.sym ) {
-            case SDLK_LEFT:
-                cout << "LEFT" << endl;
-                DGL::setMode(CAMERA);
-                DGL::translateX(-.1);
-                break;
-            case SDLK_RIGHT:
-                cout << "RIGHT" << endl;
-                DGL::setMode(CAMERA);
-                DGL::translateX(.1);
-                break;
-            case SDLK_UP:
-                cout << "UP" << endl;
-                break;
-            case SDLK_DOWN:
-                cout << "DOWN" << endl;
-                break;
-            default:
-                break;
-        }
-        break;
-            
-        case SDL_QUIT:
-            Running = false;
-            break;
-    }
-    /*
-    
-    // Capture Button presses
-    else if(e.type == SDL_JOYBUTTONDOWN) {
-        //if(e.jbutton.button & GAS_BUTTON)
-        //    buttons = (0 | GAS_BUTTON);
-    }
-    else if(e.type == SDL_JOYBUTTONUP) {
-        buttons = 0;
-    }
-    
-    
-    // Capture Hat Motion
-    else if(e.type == SDL_JOYHATMOTION) {
-
-        if(e.jhat.value & SDL_HAT_LEFT) {
-            inputs = (0 | DPAD_LEFT);
-        }
-        
-        if(e.jhat.value & SDL_HAT_RIGHT) {
-            inputs = (0 | DPAD_RIGHT);
-        }
-        
-        if(e.jhat.value == 0) {
-            inputs = 0;
-        }
-    }
-     */
-}
-
 void Game::Update() {
+    
+    if(gamepad.dpadDirection() == 3 && loopcount%2) {
+        for(int i = 0; i < 16; i++) {
+            selectedPieceIndex = (++selectedPieceIndex % 16);
+            if(selectionArea[selectedPieceIndex] != NULL) {
+                selectedPiece = selectionArea[selectedPieceIndex];
+                selectedPiece -> print();
+                break;
+            }
+        }
+    }
+    
+    if(gamepad.dpadDirection() == 7 && loopcount%2) {
+        for(int i = 0; i < 16; i++) {
+            selectedPieceIndex = (--selectedPieceIndex < 0)? 15 : selectedPieceIndex;
+            if(selectionArea[selectedPieceIndex] != NULL) {
+                selectedPiece = selectionArea[selectedPieceIndex];
+                selectedPiece -> print();
+                break;
+            }
+        }
+    }
     
     DGL::setMode( MODEL );
     
@@ -186,6 +153,48 @@ void Game::Update() {
     DGL::setMode( CAMERA );
     
     // adjust camera
+}
+
+bool
+Game::GameOver() {
+    
+    for(int i = 0; i < 4; i ++) {
+        
+        // Check columns
+        if( board.GetPiece(0,i) != NULL && board.GetPiece(1,i) != NULL && board.GetPiece(2,i) != NULL && board.GetPiece(3,i) != NULL ) {
+            if( board.GetPiece(0,i)->getDefinition() & board.GetPiece(1,i)->getDefinition() & board.GetPiece(2,i)->getDefinition() & board.GetPiece(3,i)->getDefinition() )
+                return true;
+        }
+        
+        // Check rows
+        if( board.GetPiece(i,0) != NULL && board.GetPiece(i,1) != NULL && board.GetPiece(i,2) != NULL && board.GetPiece(i,3) != NULL ) {
+            if( board.GetPiece(i,0)->getDefinition() & board.GetPiece(i,1)->getDefinition() & board.GetPiece(i,2)->getDefinition() & board.GetPiece(i,3)->getDefinition() )
+                return true;
+        }
+    }
+    
+    return false;
+}
+
+
+/************
+ * Creates all Pieces for game
+ ************/
+std::vector< Piece >
+Game::GeneratePieces() {
+    vector< Piece > allpieces;
+    
+    for(int color = 0; color < 2; color++) {
+        for(int head = 0; head < 2; head++) {
+            for(int weapon = 0; weapon < 2; weapon++) {
+                for(int height = 0; height < 2; height++) {
+                    allpieces.push_back( Piece(head, weapon, height, color) );
+                }
+            }
+        }
+    }
+    
+    return allpieces;
 }
 
 

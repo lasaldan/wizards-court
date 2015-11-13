@@ -27,6 +27,8 @@
 		65B3FF451BD8A16B00873E14 /* libSOIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B3FF431BD8A16B00873E14 /* libSOIL.dylib */; };
 		65B3FF4E1BD8BD6D00873E14 /* DGLCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF4C1BD8BD6D00873E14 /* DGLCamera.cpp */; };
 		65DC8A2B1BF65A160009C5DC /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65DC8A291BF65A160009C5DC /* InputDevice.cpp */; };
+		65DC8A2E1BF690940009C5DC /* Board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65DC8A2C1BF690940009C5DC /* Board.cpp */; };
+		65DC8A311BF690F20009C5DC /* Piece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65DC8A2F1BF690F20009C5DC /* Piece.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -82,6 +84,10 @@
 		65B3FF4D1BD8BD6D00873E14 /* DGLCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGLCamera.h; sourceTree = "<group>"; };
 		65DC8A291BF65A160009C5DC /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputDevice.cpp; sourceTree = "<group>"; };
 		65DC8A2A1BF65A160009C5DC /* InputDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputDevice.h; sourceTree = "<group>"; };
+		65DC8A2C1BF690940009C5DC /* Board.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Board.cpp; sourceTree = "<group>"; };
+		65DC8A2D1BF690940009C5DC /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Board.h; sourceTree = "<group>"; };
+		65DC8A2F1BF690F20009C5DC /* Piece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Piece.cpp; sourceTree = "<group>"; };
+		65DC8A301BF690F20009C5DC /* Piece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Piece.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,10 +144,14 @@
 				65B3FF1A1BD899CA00873E14 /* Face.h */,
 				65B3FF4C1BD8BD6D00873E14 /* DGLCamera.cpp */,
 				65B3FF4D1BD8BD6D00873E14 /* DGLCamera.h */,
-				65DC8A291BF65A160009C5DC /* InputDevice.cpp */,
 				65DC8A2A1BF65A160009C5DC /* InputDevice.h */,
-				65B3FF1B1BD899CA00873E14 /* Game.cpp */,
+				65DC8A291BF65A160009C5DC /* InputDevice.cpp */,
+				65DC8A301BF690F20009C5DC /* Piece.h */,
+				65DC8A2F1BF690F20009C5DC /* Piece.cpp */,
+				65DC8A2D1BF690940009C5DC /* Board.h */,
+				65DC8A2C1BF690940009C5DC /* Board.cpp */,
 				65B3FF1C1BD899CA00873E14 /* Game.h */,
+				65B3FF1B1BD899CA00873E14 /* Game.cpp */,
 				65B3FF1D1BD899CA00873E14 /* Item.cpp */,
 				65B3FF1E1BD899CA00873E14 /* Item.h */,
 				65B3FF1F1BD899CA00873E14 /* ManifestParser.cpp */,
@@ -219,9 +229,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65DC8A311BF690F20009C5DC /* Piece.cpp in Sources */,
 				65B3FF311BD899CA00873E14 /* Matrix.cpp in Sources */,
 				65B3FF341BD899CA00873E14 /* TextureCoordinate.cpp in Sources */,
 				65B3FF2D1BD899CA00873E14 /* Face.cpp in Sources */,
+				65DC8A2E1BF690940009C5DC /* Board.cpp in Sources */,
 				65B3FF0D1BD8990E00873E14 /* main.cpp in Sources */,
 				65B3FF181BD8999C00873E14 /* DGL.cpp in Sources */,
 				65B3FF351BD899CA00873E14 /* Vector.cpp in Sources */,

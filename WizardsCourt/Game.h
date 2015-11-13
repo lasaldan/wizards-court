@@ -16,13 +16,17 @@
 #include "SOIL.h"
 #include "Scene.h"
 #include "Item.h"
+#include "Board.h"
 #include "ManifestParser.h"
 #include "ObjParser.h"
 #include "InputDevice.h"
 #include "DGL.h"
 
-#define DPAD_LEFT 1
-#define DPAD_RIGHT 2
+#define GAME_MODE_PLACEMENT 0
+#define GAME_MODE_SELECTION 1
+
+#define PLAYER_1 1
+#define PLAYER_2 -1
 
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 768;
@@ -37,11 +41,19 @@ private:
     int inputs;
     int buttons;
     bool Running;
+    int selectedPieceIndex;
+    Piece* selectedPiece;
+    int loopcount;
+    int turn;
+    int mode;
     
     SDL_Window* viewport;
     SDL_GLContext context;
     
     Scene playarea;
+    Board board;
+    std::vector< Piece* > selectionArea;
+    std::vector< Piece > pieces;
     InputDevice gamepad;
     
 public:
@@ -51,13 +63,14 @@ public:
 private:
     bool Init();
     void InitializeScene();
-    void HandleEvent(SDL_Event&);
     void Update();
     void Render();
     void Cleanup();
     void SetupView();
     void LoadAssets(std::string, Scene&);
     void setDefaultTextureSettings();
+    bool GameOver();
+    std::vector< Piece > GeneratePieces();
 };
 
 #endif /* defined(__wizards_court__Game__) */

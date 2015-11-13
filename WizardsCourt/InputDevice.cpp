@@ -122,7 +122,6 @@ InputDevice::ShouldQuit() {
 void
 InputDevice::pressButton() {
     buttonStates[event.jbutton.button] = true;
-    std::cout << "button:" << (int)event.jbutton.button << std::endl;
 }
 
 void
