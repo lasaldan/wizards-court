@@ -18,6 +18,7 @@
 #include "Item.h"
 #include "ManifestParser.h"
 #include "ObjParser.h"
+#include "InputDevice.h"
 #include "DGL.h"
 
 #define DPAD_LEFT 1
@@ -41,7 +42,7 @@ private:
     SDL_GLContext context;
     
     Scene playarea;
-    SDL_Joystick *gamepad;
+    InputDevice gamepad;
     
 public:
     Game();

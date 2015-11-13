@@ -34,12 +34,11 @@ Game::Run() {
     InitializeScene();
     SetupView();
     
-    SDL_Event Event;
-    
     while(Running) {
-        while(SDL_PollEvent(&Event)) {
-            HandleEvent(Event);
-        }
+        
+        gamepad.PollInputs();
+        if(gamepad.ShouldQuit())
+            Running = false;
         
         Update();
         Render();
@@ -59,8 +58,12 @@ Game::InitializeScene() {
     
     Item& board = playarea.Get("board");
     Item& body = playarea.Get("body");
+    Item& staff = playarea.Get("staff");
     board.scale(.06);
     body.scale(.06);
+    staff.scale(.06);
+    
+    //body.translateX(.4);
 
 }
 
@@ -95,7 +98,7 @@ Game::Init() {
     
     // Initialize gamepad
     SDL_JoystickEventState(SDL_ENABLE);
-    gamepad = SDL_JoystickOpen(0);
+    gamepad.SetDevice( SDL_JoystickOpen(0) );
     
     DGL::init();
     
@@ -174,8 +177,10 @@ void Game::Update() {
     
     Item& board = playarea.Get("board");
     Item& body = playarea.Get("body");
+    Item& staff = playarea.Get("staff");
     board.rotateY(.3);
     body.rotateY(.3);
+    staff.rotateY(.3);
     // adjust model
     
     DGL::setMode( CAMERA );

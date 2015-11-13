@@ -390,7 +390,7 @@ DGL::drawFace(Face face){
     
     for(int i = 0; i < face.vertices.size(); i ++) {
         glTexCoord2f(face.textureCoordinates[i].x, face.textureCoordinates[i].y);
-        Vertex transformed = worldToView( objToWorld( face.vertices[i] ) );
+        Vertex transformed = viewToPerspective( worldToView( objToWorld( face.vertices[i] ) ) );
         glVertex3f(transformed.x, transformed.y, transformed.z);
     }
     
@@ -571,6 +571,7 @@ DGL::worldToView( Vertex v ) {
                  perspective.Get(3,1) * v.getY() +
                  perspective.Get(3,2) * v.getZ() +
                  perspective.Get(3,3));
+    perspectiveDivisor = 1;
     
     float x =   (viewTransformation.Get(0,0) * v.getX() +
                  viewTransformation.Get(0,1) * v.getY() +
@@ -614,11 +615,16 @@ DGL::lookAt(Vertex v) {
 void
 DGL::setPerspective() {
     
-    float d = camera.position.distanceFrom(camera.lookat);
-    //float d = 2;
+    //float d = camera.position.distanceFrom(camera.lookat);
+    float d = 2;
     //cout << "d:" << d << endl;
     
     perspective.Set( 3, 2, -1/d );
+    
+    perspective = Matrix::Identity();
+    
+    glLoadIdentity();
+    gluPerspective(90, 2, .001, 100);
     
     /*
     float right = 1;
