@@ -18,3 +18,4 @@ body0 models/body.obj textures/body_cartoon.png
 #body14 models/body.obj textures/body_cartoon.png
 #body15 models/body.obj textures/body_cartoon.png
 #staff models/staff.obj textures/staff_cartoon.png
+sun models/plane.obj textures/green_sun.png

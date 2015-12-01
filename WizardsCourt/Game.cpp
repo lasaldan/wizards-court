@@ -65,12 +65,15 @@ Game::InitializeScene() {
     Item& board = playarea.Get("board");
     //Item& cube = playarea.Get("cube");
     Item& body0 = playarea.Get("body0");
+    Item& sun = playarea.Get("sun");
     //Item& body1 = playarea.Get("body1");
     //Item& body2 = playarea.Get("body2");
     //Item& staff = playarea.Get("staff");
     board.scale(.06);
     //board.translateY(.1);
-    board.translateZ(0);
+    sun.scale(.4);
+    sun.translateZ(.3);
+    sun.translateY(.088);
     
     //cube.scale(2);
     //cube.translateY(-.90);
@@ -136,6 +139,7 @@ Game::Init() {
 void Game::Update() {
     
     Item& board = playarea.Get("board");
+    Item& sun = playarea.Get("sun");
     
     if(gamepad.dpadDirection() == 3 && loopcount%2) {
         for(int i = 0; i < 16; i++) {
@@ -160,8 +164,9 @@ void Game::Update() {
     }
     
     float boardRotation = gamepad.leftStick(HORIZONTAL_AXIS);
-    if( boardRotation > 1000 || boardRotation < -1000) {
+    if( boardRotation > 2000 || boardRotation < -2000) {
         board.rotateY(boardRotation/10000.0);
+        sun.rotateY(boardRotation/10000.0);
     }
     
     //DGL::setMode( MODEL );

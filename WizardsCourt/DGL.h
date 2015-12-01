@@ -60,6 +60,7 @@ public:
     static void drawItem(Item);
     static void drawScene(Scene);
     static Vertex rotateAbout(Vertex, Vertex, float);
+    static Vertex rotateAboutOrigin(Vertex, float);
     
     static float toRadians(float);
     static float toDegrees(float);

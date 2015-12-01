@@ -252,6 +252,11 @@ DGL::rotateAbout(Vertex center, Vertex orbiter, float degrees) {
     return temp;
 }
 
+Vertex
+DGL::rotateAboutOrigin(Vertex orbiter, float degrees) {
+    return rotateAbout(origin, orbiter, degrees);
+}
+
 
 /************
  * Modifies the current mode's rotateY matrix
