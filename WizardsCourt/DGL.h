@@ -32,6 +32,7 @@ private:
     DGL();
     static int mode;
     static DGLCamera camera;
+    static Vertex origin;
     
 public:
     static void init();

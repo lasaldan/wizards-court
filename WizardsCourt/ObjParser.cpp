@@ -65,8 +65,8 @@ Vertex ObjParser::parseVertex(string line) {
              
     y = stof(line.substr(start, end-start));
              
-    start = end;
-    end = line.length()-1;
+    start = end+1;
+    end = line.length();
              
     z = stof(line.substr(start, end-start));
     
@@ -85,8 +85,8 @@ TextureCoordinate ObjParser::parseTextureCoordinate(string line) {
     
     x = stof(line.substr(start, end-start));
     
-    start = end;
-    end = line.length()-1;
+    start = end+1;
+    end = line.length();
     
     y = stof(line.substr(start, end-start));
     

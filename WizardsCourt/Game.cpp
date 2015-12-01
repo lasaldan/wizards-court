@@ -63,11 +63,28 @@ void
 Game::InitializeScene() {
     
     Item& board = playarea.Get("board");
-    Item& body = playarea.Get("body");
-    Item& staff = playarea.Get("staff");
+    //Item& cube = playarea.Get("cube");
+    Item& body0 = playarea.Get("body0");
+    //Item& body1 = playarea.Get("body1");
+    //Item& body2 = playarea.Get("body2");
+    //Item& staff = playarea.Get("staff");
     board.scale(.06);
-    body.scale(.06);
-    staff.scale(.06);
+    //board.translateY(.1);
+    board.translateZ(0);
+    
+    //cube.scale(2);
+    //cube.translateY(-.90);
+    
+    body0.scale(.06);
+    body0.translateX(.4);
+    
+    //body1.scale(.06);
+    //body1.translateX(.4);
+    
+    //body2.scale(.06);
+    //body2.translateX(.8);
+    
+    //staff.scale(.06);
     
     //body.translateX(.4);
 
@@ -118,6 +135,8 @@ Game::Init() {
 
 void Game::Update() {
     
+    Item& board = playarea.Get("board");
+    
     if(gamepad.dpadDirection() == 3 && loopcount%2) {
         for(int i = 0; i < 16; i++) {
             selectedPieceIndex = (++selectedPieceIndex % 16);
@@ -140,18 +159,29 @@ void Game::Update() {
         }
     }
     
-    DGL::setMode( MODEL );
+    float boardRotation = gamepad.leftStick(HORIZONTAL_AXIS);
+    if( boardRotation > 1000 || boardRotation < -1000) {
+        board.rotateY(boardRotation/10000.0);
+    }
     
-    Item& board = playarea.Get("board");
-    Item& body = playarea.Get("body");
-    Item& staff = playarea.Get("staff");
-    board.rotateY(.3);
-    body.rotateY(.3);
-    staff.rotateY(.3);
+    //DGL::setMode( MODEL );
+    
+    //Item& cube = playarea.Get("cube");
+    //Item& body0 = playarea.Get("body0");
+    //Item& body1 = playarea.Get("body1");
+    //Item& body2 = playarea.Get("body2");
+    //Item& staff = playarea.Get("staff");
+    //board.rotateY(.1);
+    //cube.rotateY(.1);
+    //body0.rotateY(.1);
+    //body1.rotateY(.9);
+    //body2.rotateY(.9);
+    //staff.rotateY(.3);
     // adjust model
     
-    DGL::setMode( CAMERA );
+    //DGL::setMode( CAMERA );
     
+    //DGL::setCameraLocation(Vertex(0,4,4));
     // adjust camera
 }
 
@@ -161,18 +191,53 @@ Game::GameOver() {
     for(int i = 0; i < 4; i ++) {
         
         // Check columns
-        if( board.GetPiece(0,i) != NULL && board.GetPiece(1,i) != NULL && board.GetPiece(2,i) != NULL && board.GetPiece(3,i) != NULL ) {
-            if( board.GetPiece(0,i)->getDefinition() & board.GetPiece(1,i)->getDefinition() & board.GetPiece(2,i)->getDefinition() & board.GetPiece(3,i)->getDefinition() )
+        if( board.GetPiece(0,i) != NULL &&
+            board.GetPiece(1,i) != NULL &&
+            board.GetPiece(2,i) != NULL &&
+            board.GetPiece(3,i) != NULL ) {
+            if( board.GetPiece(0,i)->getDefinition() &
+                board.GetPiece(1,i)->getDefinition() &
+                board.GetPiece(2,i)->getDefinition() &
+                board.GetPiece(3,i)->getDefinition() )
                 return true;
         }
         
         // Check rows
-        if( board.GetPiece(i,0) != NULL && board.GetPiece(i,1) != NULL && board.GetPiece(i,2) != NULL && board.GetPiece(i,3) != NULL ) {
-            if( board.GetPiece(i,0)->getDefinition() & board.GetPiece(i,1)->getDefinition() & board.GetPiece(i,2)->getDefinition() & board.GetPiece(i,3)->getDefinition() )
+        if( board.GetPiece(i,0) != NULL &&
+            board.GetPiece(i,1) != NULL &&
+            board.GetPiece(i,2) != NULL &&
+            board.GetPiece(i,3) != NULL ) {
+            if( board.GetPiece(i,0)->getDefinition() &
+                board.GetPiece(i,1)->getDefinition() &
+                board.GetPiece(i,2)->getDefinition() &
+                board.GetPiece(i,3)->getDefinition() )
                 return true;
         }
     }
     
+    // Check Diagonal
+    if( board.GetPiece(0,0) != NULL &&
+        board.GetPiece(1,1) != NULL &&
+        board.GetPiece(2,2) != NULL &&
+        board.GetPiece(3,3) != NULL ) {
+        if( board.GetPiece(0,0)->getDefinition() &
+            board.GetPiece(1,1)->getDefinition() &
+            board.GetPiece(2,2)->getDefinition() &
+            board.GetPiece(3,3)->getDefinition() )
+            return true;
+    }
+    
+    if( board.GetPiece(0,3) != NULL &&
+        board.GetPiece(1,2) != NULL &&
+        board.GetPiece(2,1) != NULL &&
+        board.GetPiece(3,0) != NULL ) {
+        if( board.GetPiece(0,3)->getDefinition() &
+            board.GetPiece(1,2)->getDefinition() &
+            board.GetPiece(2,1)->getDefinition() &
+            board.GetPiece(3,0)->getDefinition() )
+            return true;
+    }
+
     return false;
 }
 
@@ -222,11 +287,22 @@ Game::Cleanup() {
 
 
 /************
- * Cleans up a few SDL resources
+ * Sets initial camera location
  ************/
 void
 Game::SetupView() {
     DGL::setMode( CAMERA );
+//    DGL::translateX(0);
+//    DGL::translateY(1);
+//    DGL::translateZ(1);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(50.0, 4.0/3.0, .001, 20.0);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(0.0, 0.0, 2.0,
+              0.0, 0.0, 0.0,
+              0.0, 1.0, 0.0);
 }
 
 
