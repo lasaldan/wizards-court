@@ -55,10 +55,10 @@ public:
     static void scaleY(float);
     static void scaleZ(float);
     
-    static void drawFace(Face);
+    static void drawFace(Face&);
     static void drawFaces(std::vector<Face>);
-    static void drawItem(Item);
-    static void drawScene(Scene);
+    static void drawItem(Item&);
+    static void drawScene(Scene&);
     static Vertex rotateAbout(Vertex, Vertex, float);
     static Vertex rotateAboutOrigin(Vertex, float);
     
@@ -66,6 +66,8 @@ public:
     static float toDegrees(float);
     
 private:
+    
+    static unsigned int currentTexture;
     
     static Vertex lookAtLocation;
     static Vertex cameraLocation;

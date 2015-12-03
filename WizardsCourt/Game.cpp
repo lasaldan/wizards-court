@@ -22,6 +22,8 @@ Game::Game() {
     selectedPiece = NULL;
     mode = GAME_MODE_SELECTION;
     turn = PLAYER_1;
+    lastEvent = 0;
+    repeatActionDelay = 3;
 }
 
 
@@ -62,24 +64,39 @@ Game::Run() {
 void
 Game::InitializeScene() {
     
+    // resize wizards
+    for(int i = 0; i < 16; i++) {
+        char numstr[3];
+        string base = "body";
+        sprintf(numstr, "%d", i);
+        string key = base + numstr;
+        
+        Item& piece = playarea.Get(key);
+        piece.scale(.075);
+        piece.translateY(.4);
+        piece.translateX(.8-.4*(i%4));
+        piece.translateZ(.6-.4*(i/4));
+    }
+    
     Item& board = playarea.Get("board");
     //Item& cube = playarea.Get("cube");
-    Item& body0 = playarea.Get("body0");
-    Item& sun = playarea.Get("sun");
+    //Item& body0 = playarea.Get("body0");
+    //Item& sun = playarea.Get("sun");
     //Item& body1 = playarea.Get("body1");
     //Item& body2 = playarea.Get("body2");
     //Item& staff = playarea.Get("staff");
-    board.scale(.06);
+    board.scale(.075);
     //board.translateY(.1);
-    sun.scale(.4);
-    sun.translateZ(.3);
-    sun.translateY(.088);
+    //sun.scale(.4);
+    //sun.translateZ(.3);
+    //sun.translateY(.088);
     
     //cube.scale(2);
     //cube.translateY(-.90);
     
-    body0.scale(.06);
-    body0.translateX(.4);
+    //body0.scale(.075);
+    //body0.translateY(.4);
+    //body0.translateX(.4);
     
     //body1.scale(.06);
     //body1.translateX(.4);
@@ -138,10 +155,12 @@ Game::Init() {
 
 void Game::Update() {
     
-    Item& board = playarea.Get("board");
-    Item& sun = playarea.Get("sun");
+    DGL::setMode( MODEL );
     
-    if(gamepad.dpadDirection() == 3 && loopcount%2) {
+    Item& board = playarea.Get("board");
+    
+    if(gamepad.dpadDirection() == 3 && lastEvent+repeatActionDelay < loopcount) {
+        lastEvent = loopcount;
         for(int i = 0; i < 16; i++) {
             selectedPieceIndex = (++selectedPieceIndex % 16);
             if(selectionArea[selectedPieceIndex] != NULL) {
@@ -152,7 +171,8 @@ void Game::Update() {
         }
     }
     
-    if(gamepad.dpadDirection() == 7 && loopcount%2) {
+    if(gamepad.dpadDirection() == 7 && lastEvent+repeatActionDelay < loopcount) {
+        lastEvent = loopcount;
         for(int i = 0; i < 16; i++) {
             selectedPieceIndex = (--selectedPieceIndex < 0)? 15 : selectedPieceIndex;
             if(selectionArea[selectedPieceIndex] != NULL) {
@@ -166,7 +186,16 @@ void Game::Update() {
     float boardRotation = gamepad.leftStick(HORIZONTAL_AXIS);
     if( boardRotation > 2000 || boardRotation < -2000) {
         board.rotateY(boardRotation/10000.0);
-        sun.rotateY(boardRotation/10000.0);
+        
+        for(int i = 0; i < 16; i++) {
+            char numstr[3];
+            string base = "body";
+            sprintf(numstr, "%d", i);
+            string key = base + numstr;
+            
+            Item& piece = playarea.Get(key);
+            piece.rotateY(boardRotation/10000.0);
+        }
     }
     
     //DGL::setMode( MODEL );
@@ -302,10 +331,10 @@ Game::SetupView() {
 //    DGL::translateZ(1);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(50.0, 4.0/3.0, .001, 20.0);
+    gluPerspective(50.0, 4.0/3.0, .001, 50.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(0.0, 0.0, 2.0,
+    gluLookAt(0.0, 0.0, 2.5,
               0.0, 0.0, 0.0,
               0.0, 1.0, 0.0);
 }

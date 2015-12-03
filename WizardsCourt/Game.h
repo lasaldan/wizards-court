@@ -46,6 +46,8 @@ private:
     int loopcount;
     int turn;
     int mode;
+    int lastEvent;
+    int repeatActionDelay;
     
     SDL_Window* viewport;
     SDL_GLContext context;

@@ -32,6 +32,7 @@ Vector DGL::up;
 DGLCamera DGL::camera;
 Vertex DGL::origin;
 int DGL::mode;
+unsigned int DGL::currentTexture;
 bool DGL::objMatrixDirty;
 bool DGL::viewMatrixDirty;
 
@@ -94,6 +95,7 @@ DGL::setMode(int newMode) {
  ************/
 void
 DGL::setTexture(unsigned int id) {
+    currentTexture = id;
     glBindTexture(GL_TEXTURE_2D, id);
 }
 
@@ -403,7 +405,7 @@ DGL::scaleZ(float val) {
  * Draws a single face using current pipeline settings
  ************/
 void
-DGL::drawFace(Face face){
+DGL::drawFace(Face &face){
     
     glBegin(GL_POLYGON);
     
@@ -434,7 +436,7 @@ DGL::drawFaces(vector<Face> faces){
  * Draws all faces in an item using current pipeline settings
  ************/
 void
-DGL::drawItem(Item item){
+DGL::drawItem(Item &item){
     
     for (auto& face: item.faces) {
         drawFace(face);
@@ -446,7 +448,7 @@ DGL::drawItem(Item item){
  * Draws all items in the scene using current pipeline settings
  ************/
 void
-DGL::drawScene(Scene scene){
+DGL::drawScene(Scene &scene){
     
     int preMode = mode;
     mode = MODEL;
@@ -454,7 +456,8 @@ DGL::drawScene(Scene scene){
     for (auto& item: scene.Items) {
         Item obj = item.second;
         
-        setTexture(obj.texture);
+        if(obj.texture != currentTexture)
+            setTexture(obj.texture);
         
         rotateXYZ(obj.rotationX, obj.rotationY, obj.rotationZ);
         translateXYZ(obj.translationX, obj.translationY, obj.translationZ);
@@ -478,19 +481,20 @@ DGL::calculateTransformation() {
     if(viewMatrixDirty)
         calculateViewTransformation();
     
-    transformation = perspective.Multiply(viewTransformation.Multiply(objTransformation));
+    //transformation = perspective.Multiply(viewTransformation.Multiply(objTransformation));
     transformation = viewTransformation.Multiply(objTransformation);
 }
 
 Vertex
 DGL::transform(Vertex v) {
     
-    float perspectiveDivisor =
+    /*float perspectiveDivisor =
     (perspective.Get(3,0) * v.getX() +
      perspective.Get(3,1) * v.getY() +
      perspective.Get(3,2) * v.getZ() +
      perspective.Get(3,3));
-    perspectiveDivisor = 1;
+     */
+    float perspectiveDivisor = 1;
     
     float x = (transformation.Get(0,0) * v.getX() +
                transformation.Get(0,1) * v.getY() +
@@ -506,7 +510,7 @@ DGL::transform(Vertex v) {
                transformation.Get(2,1) * v.getY() +
                transformation.Get(2,2) * v.getZ() +
                transformation.Get(2,3))/perspectiveDivisor;
-    
+
 return Vertex(x,y,z);
     
 }
@@ -763,7 +767,10 @@ DGL::calculateViewInverseTransformation() {
  ************/
 Matrix
 DGL::calculateObjectTransformation() {
-    objTransformation = objTranslate.Multiply(objScale).Multiply(objRotateX).Multiply(objRotateY).Multiply(objRotateZ);
+    //objTransformation = objTranslate.Multiply(objScale).Multiply(objRotateX).Multiply(objRotateY).Multiply(objRotateZ);
+    objTransformation = objRotateY.Multiply(objTranslate).Multiply(objScale).Multiply(objRotateX).Multiply(objRotateZ);
+    
+    //objTransformation = objRotateX.Multiply(objRotateY).Multiply(objRotateZ).Multiply(objScale).Multiply(objTranslate);
     objMatrixDirty = false;
     return objTransformation;
 }
