@@ -10,18 +10,19 @@
 #define __WizardsCourt__Piece__
 
 #include <stdio.h>
+#include <string>
 
-#define HAT 0
-#define HOOD 1
+#define BLUE 128
+#define WHITE 64
 
-#define BLUE 0
-#define WHITE 1
+#define HOOD 32
+#define HAT 16
 
-#define STAFF 0
-#define SWORD 1
+#define SWORD 8
+#define STAFF 4
 
-#define TALL 0
-#define SHORT 1
+#define SHORT 2
+#define TALL 1
 
 class Piece {
 private:
@@ -29,6 +30,7 @@ private:
     int weapon;
     int height;
     int color;
+    int attributes;
 public:
     Piece();
     Piece(int headwear, int weapon, int height, int color);
@@ -37,6 +39,8 @@ public:
     int getHeight();
     int getColor();
     void print();
+    int attr();
+    std::string attrStr();
     int getDefinition();
 };
 

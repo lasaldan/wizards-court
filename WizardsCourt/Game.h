@@ -73,6 +73,11 @@ private:
     void setDefaultTextureSettings();
     bool GameOver();
     std::vector< Piece > GeneratePieces();
+    
+    void lookAtBoard();
+    void lookAtPieces();
+    
+    std::pair<int,int> selectedAvailableSquare;
 };
 
 #endif /* defined(__wizards_court__Game__) */

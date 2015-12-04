@@ -17,6 +17,12 @@ Piece::Piece(int head, int weap, int h, int c) {
     weapon = weap;
     height = h;
     color = c;
+    
+    attributes = 0;
+    attributes += (head)?HOOD:HAT;
+    attributes += (weap)?SWORD:STAFF;
+    attributes += (h)?TALL:SHORT;
+    attributes += (c)?BLUE:WHITE;
 }
 
 int
@@ -42,6 +48,19 @@ Piece::getColor() {
 int
 Piece::getDefinition() {
     return (headwear + (weapon << 1) + (height << 2) + (color << 3));
+}
+
+int
+Piece::attr() {
+    return attributes;
+}
+
+std::string
+Piece::attrStr() {
+    std::string r;
+    while(attributes!=0) {r=(attributes%2==0 ?"0":"1")+r; attributes/=2;}
+    if(r.length() == 7) r = "0" + r;
+    return r;
 }
 
 

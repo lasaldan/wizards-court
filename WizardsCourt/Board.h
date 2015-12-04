@@ -21,6 +21,8 @@ public:
     Board();
     void PlacePiece(int, int, Piece*);
     Piece* GetPiece(int, int);
+    std::pair<int,int> nextAvailableLocation(std::pair<int,int>);
+    std::pair<int,int> previousAvailableLocation(std::pair<int,int>);
 };
 
 #endif /* defined(__WizardsCourt__Board__) */

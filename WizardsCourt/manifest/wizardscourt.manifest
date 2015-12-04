@@ -1,22 +1,73 @@
-#varname model texture
+# Manifest file for main scene in Wizards Court
+# every line must be empty, begin with a # or contain a manifest entry
+# manifest entries are in the form: varname model texture
+#
+# varname: the key (string) to reference the piece in the scene
+# model: path from the root to the .obj file to be parsed
+# texture: path to the .png file to be texture mapped onto the object
+#
+
+
+# playing board, 4x4
 board models/board_lo_poly.obj textures/board_cartoon.png
-#cube models/cube.obj textures/body_cartoon.png
-#body0 models/body.obj textures/body_cartoon.png
-body0 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body1 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body2 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body3 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body4 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body5 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body6 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body7 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body8 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body9 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body10 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body11 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body12 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body13 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body14 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-body15 models/wizard_lo_poly_1.obj textures/blue_cartoon_lo_poly.png
-#staff models/staff.obj textures/staff_cartoon.png
+
+
+# wizard pieces - 16 each with unique combination of attributes
+# The order of attributes of a piece is as follows:
+# BLUE WHIT HOOD HAT  SWOR STAF SHOR TALL
+
+# Blue, Hat, Staff, Tall
+wizard10010101 models/wizard_1111.obj textures/blue_cartoon_lo_poly.png
+
+# Blue, Hat, Sword, Tall
+wizard10011001 models/wizard_1101.obj textures/blue_cartoon_lo_poly.png
+
+# Blue, Hood, Staff, Tall
+wizard10100101 models/wizard_1011.obj textures/blue_cartoon_lo_poly.png
+
+# Blue, Hood, Sword, Tall
+wizard10101001 models/wizard_1001.obj textures/blue_cartoon_lo_poly.png
+
+# White, Hat, Staff, Tall
+wizard01010101 models/wizard_1111.obj textures/white_cartoon_lo_poly.png
+
+# White, Hat, Sword, Tall
+wizard01011001 models/wizard_1101.obj textures/white_cartoon_lo_poly.png
+
+# White, Hood, Staff, Tall
+wizard01100101 models/wizard_1011.obj textures/white_cartoon_lo_poly.png
+
+# White, Hood, Sword, Tall
+wizard01101001 models/wizard_1001.obj textures/white_cartoon_lo_poly.png
+
+# Blue, Hat, Staff, Short
+wizard10010110 models/wizard_1111.obj textures/blue_cartoon_lo_poly.png
+
+# Blue, Hat, Sword, Short
+wizard10011010 models/wizard_1101.obj textures/blue_cartoon_lo_poly.png
+
+# Blue, Hood, Staff, Short
+wizard10100110 models/wizard_1011.obj textures/blue_cartoon_lo_poly.png
+
+# Blue, Hood, Sword, Short
+wizard10101010 models/wizard_1001.obj textures/blue_cartoon_lo_poly.png
+
+# White, Hat, Staff, Short
+wizard01010110 models/wizard_1111.obj textures/white_cartoon_lo_poly.png
+
+# White, Hat, Sword, Short
+wizard01011010 models/wizard_1101.obj textures/white_cartoon_lo_poly.png
+
+# White, Hood, Staff, Short
+wizard01100110 models/wizard_1011.obj textures/white_cartoon_lo_poly.png
+
+# White, Hood, Sword, Short
+wizard01101010 models/wizard_1001.obj textures/white_cartoon_lo_poly.png
+
+
+# simple selection indicator
 sun models/plane.obj textures/green_sun.png
+
+
+# Shelf to hold the unused pieces
+shelf models/shelf_lo_poly.obj textures/shelf_cartoon.png

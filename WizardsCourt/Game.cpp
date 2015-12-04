@@ -64,50 +64,85 @@ Game::Run() {
 void
 Game::InitializeScene() {
     
-    // resize wizards
-    for(int i = 0; i < 16; i++) {
-        char numstr[3];
-        string base = "body";
-        sprintf(numstr, "%d", i);
-        string key = base + numstr;
+    pieces = GeneratePieces();
+    int xpos = 0;
+    int ypos = 0;
+    int i = 0;
+    
+    float shortYOffset = .34;
+    float tallYOffset = .435;
+    float yoffset = 0;
+    
+    // Position pieces to their initial locations
+    for(Piece& piece : pieces) {
         
-        Item& piece = playarea.Get(key);
-        piece.scale(.075);
-        piece.translateY(.4);
-        piece.translateX(.8-.4*(i%4));
-        piece.translateZ(.6-.4*(i/4));
+        string key = "wizard" + piece.attrStr();
+        Item& model = playarea.Get(key);
+        
+        if(piece.getHeight()) {
+            model.scale(.075);
+            yoffset = tallYOffset;
+        }
+        else {
+            model.scale(.055);
+            yoffset = shortYOffset;
+        }
+        model.rotateY(180);
+        
+        float modelx = .39*xpos-1.4;
+        float modely = .89*ypos + yoffset;
+        
+        model.translateY(modely);
+        model.translateX(modelx);
+        model.translateZ(1.6);
+        
+        i++;
+        
+        xpos = i % 8;
+        ypos = i / 8;
+        
+        selectionArea.push_back(&piece);
     }
     
-    Item& board = playarea.Get("board");
-    //Item& cube = playarea.Get("cube");
-    //Item& body0 = playarea.Get("body0");
-    //Item& sun = playarea.Get("sun");
-    //Item& body1 = playarea.Get("body1");
-    //Item& body2 = playarea.Get("body2");
-    //Item& staff = playarea.Get("staff");
-    board.scale(.075);
-    //board.translateY(.1);
-    //sun.scale(.4);
-    //sun.translateZ(.3);
-    //sun.translateY(.088);
+    selectedAvailableSquare = board.nextAvailableLocation(std::pair<int,int>(3,3));
     
-    //cube.scale(2);
-    //cube.translateY(-.90);
     
-    //body0.scale(.075);
-    //body0.translateY(.4);
-    //body0.translateX(.4);
+    /*
+ Set GL_LIGHT_0's position to something like 45 degrees to the 'vertical'. Coordinate (1,1,0) should work nicely in most cases.
+     Set GL_LIGHT_0's Ambient color to 0,0,0,1
+     Set GL_LIGHT_0's Diffuse color to 1,1,1,1
+     Set GL_LIGHT_0's Specular color to 1,1,1,1
+     Set the glLightModel's global ambient to 0.2,0.2,0.2,1 (this is the default).
+     Don't set any other glLight or glLightModel options - just let them default.
+     Enable GL_LIGHTING and GL_LIGHT_0.
+     Enable GL_COLOR_MATERIAL and set glColorMaterial to GL_AMBIENT_AND_DIFFUSE. This means that glMaterial will control the polygon's specular and emission colours and the ambient and diffuse will both be set using glColor.
+     Set the glMaterial's Specular colour to 1,1,1,1
+     Set the glMaterial's Emission colour to 0,0,0,1
+     Set the glColor to whatever colour you want each polygon to basically appear to be. That sets the Ambient and Diffuse to the same value which is what you generally want.
+     */
     
-    //body1.scale(.06);
-    //body1.translateX(.4);
-    
-    //body2.scale(.06);
-    //body2.translateX(.8);
-    
-    //staff.scale(.06);
-    
-    //body.translateX(.4);
+//    GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
+//    GLfloat light_ambient[] = { 1.0, 0.0, 0.0, 0.0 };
+//    
+//    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+//    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+//    
+//    glEnable(GL_LIGHTING);
+//    glEnable(GL_LIGHT0);
+//    glEnable(GL_DEPTH_TEST);
 
+
+    
+    Item& board = playarea.Get("board");
+    Item& shelf = playarea.Get("shelf");
+    Item& sun = playarea.Get("sun");
+    board.scale(.075);
+    shelf.scale(.075);
+    shelf.translateZ(1.9);
+    shelf.rotateY(180);
+    //sun.translateY(.07);
+    sun.translateY(.02);
+    sun.scale(.4);
 }
 
 
@@ -157,9 +192,12 @@ void Game::Update() {
     
     DGL::setMode( MODEL );
     
-    Item& board = playarea.Get("board");
+    Item& boardModel = playarea.Get("board");
+    Item& sun = playarea.Get("sun");
     
-    if(gamepad.dpadDirection() == 3 && lastEvent+repeatActionDelay < loopcount) {
+    int dpadDir = gamepad.dpadDirection();
+    
+    if(dpadDir == 3 && lastEvent+repeatActionDelay < loopcount) {
         lastEvent = loopcount;
         for(int i = 0; i < 16; i++) {
             selectedPieceIndex = (++selectedPieceIndex % 16);
@@ -171,7 +209,7 @@ void Game::Update() {
         }
     }
     
-    if(gamepad.dpadDirection() == 7 && lastEvent+repeatActionDelay < loopcount) {
+    else if(dpadDir == 7 && lastEvent+repeatActionDelay < loopcount) {
         lastEvent = loopcount;
         for(int i = 0; i < 16; i++) {
             selectedPieceIndex = (--selectedPieceIndex < 0)? 15 : selectedPieceIndex;
@@ -183,40 +221,37 @@ void Game::Update() {
         }
     }
     
-    float boardRotation = gamepad.leftStick(HORIZONTAL_AXIS);
-    if( boardRotation > 2000 || boardRotation < -2000) {
-        board.rotateY(boardRotation/10000.0);
-        
-        for(int i = 0; i < 16; i++) {
-            char numstr[3];
-            string base = "body";
-            sprintf(numstr, "%d", i);
-            string key = base + numstr;
-            
-            Item& piece = playarea.Get(key);
-            piece.rotateY(boardRotation/10000.0);
-        }
+    else if(dpadDir == 1) {
+        lookAtPieces();
+    }
+    else if(dpadDir == 5) {
+        lookAtBoard();
     }
     
-    //DGL::setMode( MODEL );
+    if(gamepad.isButtonDown(4) && lastEvent+repeatActionDelay < loopcount) {
+        lastEvent = loopcount;
+        selectedAvailableSquare = board.previousAvailableLocation(selectedAvailableSquare);
+        sun.translationX =.4*selectedAvailableSquare.second - .6;
+        sun.translationZ =.4*selectedAvailableSquare.first - .47;
+    }
+    else if(gamepad.isButtonDown(5) && lastEvent+repeatActionDelay < loopcount) {
+        lastEvent = loopcount;
+        selectedAvailableSquare = board.nextAvailableLocation(selectedAvailableSquare);
+        sun.translationX =.4*selectedAvailableSquare.second - .6;
+        sun.translationZ =.4*selectedAvailableSquare.first - .47;
+    }
     
-    //Item& cube = playarea.Get("cube");
-    //Item& body0 = playarea.Get("body0");
-    //Item& body1 = playarea.Get("body1");
-    //Item& body2 = playarea.Get("body2");
-    //Item& staff = playarea.Get("staff");
-    //board.rotateY(.1);
-    //cube.rotateY(.1);
-    //body0.rotateY(.1);
-    //body1.rotateY(.9);
-    //body2.rotateY(.9);
-    //staff.rotateY(.3);
-    // adjust model
+    float boardRotation = gamepad.leftStick(HORIZONTAL_AXIS);
+    if( boardRotation > 2000 || boardRotation < -2000) {
+        boardModel.rotateY(boardRotation/5000.0);
+        sun.rotateY(boardRotation/5000.0);
+    }
     
-    //DGL::setMode( CAMERA );
+    //sun.translateX(.4*selectedAvailableSquare.second);
+    //sun.translateZ(.4*selectedAvailableSquare.first);
     
-    //DGL::setCameraLocation(Vertex(0,4,4));
-    // adjust camera
+    cout << selectedAvailableSquare.first << "," << selectedAvailableSquare.second << endl;
+    
 }
 
 bool
@@ -229,10 +264,10 @@ Game::GameOver() {
             board.GetPiece(1,i) != NULL &&
             board.GetPiece(2,i) != NULL &&
             board.GetPiece(3,i) != NULL ) {
-            if( board.GetPiece(0,i)->getDefinition() &
-                board.GetPiece(1,i)->getDefinition() &
-                board.GetPiece(2,i)->getDefinition() &
-                board.GetPiece(3,i)->getDefinition() )
+            if( board.GetPiece(0,i)->attr() &
+                board.GetPiece(1,i)->attr() &
+                board.GetPiece(2,i)->attr() &
+                board.GetPiece(3,i)->attr() )
                 return true;
         }
         
@@ -241,10 +276,10 @@ Game::GameOver() {
             board.GetPiece(i,1) != NULL &&
             board.GetPiece(i,2) != NULL &&
             board.GetPiece(i,3) != NULL ) {
-            if( board.GetPiece(i,0)->getDefinition() &
-                board.GetPiece(i,1)->getDefinition() &
-                board.GetPiece(i,2)->getDefinition() &
-                board.GetPiece(i,3)->getDefinition() )
+            if( board.GetPiece(i,0)->attr() &
+                board.GetPiece(i,1)->attr() &
+                board.GetPiece(i,2)->attr() &
+                board.GetPiece(i,3)->attr() )
                 return true;
         }
     }
@@ -254,10 +289,10 @@ Game::GameOver() {
         board.GetPiece(1,1) != NULL &&
         board.GetPiece(2,2) != NULL &&
         board.GetPiece(3,3) != NULL ) {
-        if( board.GetPiece(0,0)->getDefinition() &
-            board.GetPiece(1,1)->getDefinition() &
-            board.GetPiece(2,2)->getDefinition() &
-            board.GetPiece(3,3)->getDefinition() )
+        if( board.GetPiece(0,0)->attr() &
+            board.GetPiece(1,1)->attr() &
+            board.GetPiece(2,2)->attr() &
+            board.GetPiece(3,3)->attr() )
             return true;
     }
     
@@ -265,10 +300,10 @@ Game::GameOver() {
         board.GetPiece(1,2) != NULL &&
         board.GetPiece(2,1) != NULL &&
         board.GetPiece(3,0) != NULL ) {
-        if( board.GetPiece(0,3)->getDefinition() &
-            board.GetPiece(1,2)->getDefinition() &
-            board.GetPiece(2,1)->getDefinition() &
-            board.GetPiece(3,0)->getDefinition() )
+        if( board.GetPiece(0,3)->attr() &
+            board.GetPiece(1,2)->attr() &
+            board.GetPiece(2,1)->attr() &
+            board.GetPiece(3,0)->attr() )
             return true;
     }
 
@@ -332,10 +367,33 @@ Game::SetupView() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(50.0, 4.0/3.0, .001, 50.0);
+    
+    lookAtPieces();
+}
+
+
+/************
+ * Looks at board
+ ***********/
+void
+Game::lookAtBoard() {
     glMatrixMode(GL_MODELVIEW);
+
     glLoadIdentity();
-    gluLookAt(0.0, 0.0, 2.5,
+
+    gluLookAt(0.0, 0.5, 2.5,
               0.0, 0.0, 0.0,
+              0.0, 1.0, 0.0);
+}
+
+void
+Game::lookAtPieces() {
+    glMatrixMode(GL_MODELVIEW);
+
+    glLoadIdentity();
+
+    gluLookAt(0.0, 0.8, 1.5,
+              0.0, 1.0, 0.0,
               0.0, 1.0, 0.0);
 }
 
@@ -383,5 +441,9 @@ Game::setDefaultTextureSettings() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glEnable(GL_TEXTURE_2D);
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_LIGHTING);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 }
