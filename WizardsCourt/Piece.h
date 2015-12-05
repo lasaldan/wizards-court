@@ -38,7 +38,12 @@ public:
     int getWeapon();
     int getHeight();
     int getColor();
+    void setHeadwear(int);
+    void setWeapon(int);
+    void setHeight(int);
+    void setColor(int);
     void print();
+    void generateAttrString();
     int attr();
     std::string attrStr();
     int getDefinition();

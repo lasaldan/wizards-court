@@ -65,6 +65,10 @@ void
 Game::InitializeScene() {
     
     pieces = GeneratePieces();
+    for(int i = 0; i < 16; i++) {
+        selectionArea[i] = &(pieces[i]);
+    }
+    
     int xpos = 0;
     int ypos = 0;
     int i = 0;
@@ -101,11 +105,10 @@ Game::InitializeScene() {
         xpos = i % 8;
         ypos = i / 8;
         
-        selectionArea.push_back(&piece);
+        //selectionArea.push_back(&piece);
     }
     
-    selectedAvailableSquare = board.nextAvailableLocation(std::pair<int,int>(3,3));
-    
+    selectNextSquare();
     
     /*
  Set GL_LIGHT_0's position to something like 45 degrees to the 'vertical'. Coordinate (1,1,0) should work nicely in most cases.
@@ -146,6 +149,30 @@ Game::InitializeScene() {
 }
 
 
+
+
+/************
+ * Sets the current state for the Game
+ ************/
+void
+Game::NextState() {
+    if(mode == GAME_MODE_SELECTION) {
+        mode = GAME_MODE_PLACEMENT;
+        turn *= -1;
+        lookAtBoard();
+    }
+    else {
+        mode = GAME_MODE_SELECTION;
+        lookAtPieces();
+    }
+    
+    std::string m = (mode==GAME_MODE_SELECTION)?"Select a piece":"Place the piece";
+    std::string p = (turn==PLAYER_1)?"Player 1":"Player 2";
+    
+    cout << p << " -> " << m << endl;
+}
+
+
 /************
  * Initializes SDL and other general variables for the Game
  ************/
@@ -178,11 +205,6 @@ Game::Init() {
     SDL_JoystickEventState(SDL_ENABLE);
     gamepad.SetDevice( SDL_JoystickOpen(0) );
     
-    pieces = GeneratePieces();
-    for(int i = 0; i < 16; i++) {
-        selectionArea[i] = &(pieces[i]);
-    }
-    
     DGL::init();
     
     return true;
@@ -193,32 +215,23 @@ void Game::Update() {
     DGL::setMode( MODEL );
     
     Item& boardModel = playarea.Get("board");
-    Item& sun = playarea.Get("sun");
     
     int dpadDir = gamepad.dpadDirection();
-    
-    if(dpadDir == 3 && lastEvent+repeatActionDelay < loopcount) {
+        
+    if((dpadDir == 7 || gamepad.isButtonDown(4)) && lastEvent+repeatActionDelay < loopcount) {
         lastEvent = loopcount;
-        for(int i = 0; i < 16; i++) {
-            selectedPieceIndex = (++selectedPieceIndex % 16);
-            if(selectionArea[selectedPieceIndex] != NULL) {
-                selectedPiece = selectionArea[selectedPieceIndex];
-                selectedPiece -> print();
-                break;
-            }
-        }
+        if(mode == GAME_MODE_SELECTION)
+            selectNextPiece();
+        else
+            selectNextSquare();
+        
     }
-    
-    else if(dpadDir == 7 && lastEvent+repeatActionDelay < loopcount) {
+    else if((dpadDir == 3 || gamepad.isButtonDown(5)) && lastEvent+repeatActionDelay < loopcount) {
         lastEvent = loopcount;
-        for(int i = 0; i < 16; i++) {
-            selectedPieceIndex = (--selectedPieceIndex < 0)? 15 : selectedPieceIndex;
-            if(selectionArea[selectedPieceIndex] != NULL) {
-                selectedPiece = selectionArea[selectedPieceIndex];
-                selectedPiece -> print();
-                break;
-            }
-        }
+        if(mode == GAME_MODE_SELECTION)
+            selectPrevPiece();
+        else
+            selectPrevSquare();
     }
     
     else if(dpadDir == 1) {
@@ -228,30 +241,67 @@ void Game::Update() {
         lookAtBoard();
     }
     
-    if(gamepad.isButtonDown(4) && lastEvent+repeatActionDelay < loopcount) {
-        lastEvent = loopcount;
-        selectedAvailableSquare = board.previousAvailableLocation(selectedAvailableSquare);
-        sun.translationX =.4*selectedAvailableSquare.second - .6;
-        sun.translationZ =.4*selectedAvailableSquare.first - .47;
-    }
-    else if(gamepad.isButtonDown(5) && lastEvent+repeatActionDelay < loopcount) {
-        lastEvent = loopcount;
-        selectedAvailableSquare = board.nextAvailableLocation(selectedAvailableSquare);
-        sun.translationX =.4*selectedAvailableSquare.second - .6;
-        sun.translationZ =.4*selectedAvailableSquare.first - .47;
-    }
-    
     float boardRotation = gamepad.leftStick(HORIZONTAL_AXIS);
     if( boardRotation > 2000 || boardRotation < -2000) {
         boardModel.rotateY(boardRotation/5000.0);
-        sun.rotateY(boardRotation/5000.0);
+        playarea.Get("sun").rotateY(boardRotation/5000.0);
     }
     
-    //sun.translateX(.4*selectedAvailableSquare.second);
-    //sun.translateZ(.4*selectedAvailableSquare.first);
-    
-    cout << selectedAvailableSquare.first << "," << selectedAvailableSquare.second << endl;
-    
+    if(gamepad.isButtonDown(1) && lastEvent+repeatActionDelay*2 < loopcount) {
+        lastEvent = loopcount;
+        if(mode == GAME_MODE_SELECTION) {
+            selectedPiece = selectionArea[selectedPieceIndex];
+            selectionArea[selectedPieceIndex] = NULL;
+            selectNextPiece();
+        }
+        else {
+            board.PlacePiece(selectedAvailableSquare.first, selectedAvailableSquare.second, selectedPiece);
+            selectNextSquare();
+        }
+        NextState();
+    }
+}
+
+void
+Game::selectNextPiece() {
+    for(int i = 0; i < 16; i++) {
+        selectedPieceIndex = (++selectedPieceIndex % 16);
+        if(selectionArea[selectedPieceIndex] != NULL) {
+            selectedPiece = selectionArea[selectedPieceIndex];
+            cout << "HIGHLIGHTED:" << endl;
+            selectedPiece -> print();
+            cout << endl;
+            break;
+        }
+    }
+}
+
+void
+Game::selectPrevPiece() {
+    for(int i = 0; i < 16; i++) {
+        selectedPieceIndex = (--selectedPieceIndex < 0)? 15 : selectedPieceIndex;
+        if(selectionArea[selectedPieceIndex] != NULL) {
+            selectedPiece = selectionArea[selectedPieceIndex];
+            cout << "HIGHLIGHTED:" << endl;
+            selectedPiece -> print();
+            cout << endl;
+            break;
+        }
+    }
+}
+
+void
+Game::selectNextSquare() {
+    selectedAvailableSquare = board.previousAvailableLocation(selectedAvailableSquare);
+    playarea.Get("sun").translationX =.4*selectedAvailableSquare.second - .6;
+    playarea.Get("sun").translationZ =.4*selectedAvailableSquare.first - .47;
+}
+
+void
+Game::selectPrevSquare() {
+    selectedAvailableSquare = board.nextAvailableLocation(selectedAvailableSquare);
+    playarea.Get("sun").translationX =.4*selectedAvailableSquare.second - .6;
+    playarea.Get("sun").translationZ =.4*selectedAvailableSquare.first - .47;
 }
 
 bool
@@ -322,7 +372,12 @@ Game::GeneratePieces() {
         for(int head = 0; head < 2; head++) {
             for(int weapon = 0; weapon < 2; weapon++) {
                 for(int height = 0; height < 2; height++) {
-                    allpieces.push_back( Piece(head, weapon, height, color) );
+                    Piece p = Piece();
+                    p.setHeadwear(head);
+                    p.setWeapon(weapon);
+                    p.setHeight(height);
+                    p.setColor(color);
+                    allpieces.push_back( p );
                 }
             }
         }

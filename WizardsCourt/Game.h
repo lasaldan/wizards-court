@@ -72,10 +72,16 @@ private:
     void LoadAssets(std::string, Scene&);
     void setDefaultTextureSettings();
     bool GameOver();
+    void NextState();
     std::vector< Piece > GeneratePieces();
     
     void lookAtBoard();
     void lookAtPieces();
+    
+    void selectNextPiece();
+    void selectPrevPiece();
+    void selectNextSquare();
+    void selectPrevSquare();
     
     std::pair<int,int> selectedAvailableSquare;
 };

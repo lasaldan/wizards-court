@@ -22,6 +22,11 @@ Board::GetPiece(int row, int col) {
     return board[row][col];
 }
 
+void
+Board::PlacePiece(int row, int col, Piece * Piece) {
+    board[row][col] = Piece;
+}
+
 std::pair<int,int>
 Board::nextAvailableLocation(std::pair<int,int> current) {
     

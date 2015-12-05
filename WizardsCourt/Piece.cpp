@@ -17,12 +17,16 @@ Piece::Piece(int head, int weap, int h, int c) {
     weapon = weap;
     height = h;
     color = c;
-    
+    generateAttrString();
+}
+
+void
+Piece::generateAttrString() {
     attributes = 0;
-    attributes += (head)?HOOD:HAT;
-    attributes += (weap)?SWORD:STAFF;
-    attributes += (h)?TALL:SHORT;
-    attributes += (c)?BLUE:WHITE;
+    attributes += (headwear)?HOOD:HAT;
+    attributes += (weapon)?SWORD:STAFF;
+    attributes += (height)?TALL:SHORT;
+    attributes += (color)?BLUE:WHITE;
 }
 
 int
@@ -50,6 +54,30 @@ Piece::getDefinition() {
     return (headwear + (weapon << 1) + (height << 2) + (color << 3));
 }
 
+void
+Piece::setHeadwear(int h) {
+    headwear = h;
+    generateAttrString();
+}
+
+void
+Piece::setWeapon(int h) {
+    weapon = h;
+    generateAttrString();
+}
+
+void
+Piece::setColor(int h) {
+    color = h;
+    generateAttrString();
+}
+
+void
+Piece::setHeight(int h) {
+    height = h;
+    generateAttrString();
+}
+
 int
 Piece::attr() {
     return attributes;
@@ -60,6 +88,7 @@ Piece::attrStr() {
     std::string r;
     while(attributes!=0) {r=(attributes%2==0 ?"0":"1")+r; attributes/=2;}
     if(r.length() == 7) r = "0" + r;
+    std::cout << attributes << "=" << r << std::endl;
     return r;
 }
 
@@ -67,11 +96,13 @@ Piece::attrStr() {
 void
 Piece::print() {
     
-    std::cout << getDefinition() << std::endl;
+    //std::cout << getDefinition() << std::endl;
     
-    std::cout << "Hat:" << headwear << std::endl;
-    std::cout << "Weapon:" << weapon << std::endl;
-    std::cout << "Height:" << height << std::endl;
-    std::cout << "Color:" << color << std::endl;
+    std::string h = (height)?"Tall":"Short";
+    std::string c = (color)?"Blue":"White";
+    std::string w = (weapon)?"Sword":"Staff";
+    std::string head = (headwear)?"Hood":"Hat";
+    
+    std::cout <<  h << " " << c << " with " << head << " and " << w << std::endl;
      
 }
