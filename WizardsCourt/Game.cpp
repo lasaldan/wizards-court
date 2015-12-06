@@ -24,6 +24,7 @@ Game::Game() {
     turn = PLAYER_1;
     lastEvent = 0;
     repeatActionDelay = 3;
+    gameOver = false;
 }
 
 
@@ -245,18 +246,51 @@ void Game::Update() {
     if( boardRotation > 2000 || boardRotation < -2000) {
         boardModel.rotateY(boardRotation/5000.0);
         playarea.Get("sun").rotateY(boardRotation/5000.0);
+        for(int row = 0; row < 4; row++) {
+            for( int col = 0; col < 4; col++) {
+                Piece* t = board.GetPiece(row, col);
+                if(t != NULL)
+                    t->model->rotateY(boardRotation/5000.0);
+            }
+        }
     }
     
-    if(gamepad.isButtonDown(1) && lastEvent+repeatActionDelay*2 < loopcount) {
+    if(gamepad.isButtonDown(1) && lastEvent+repeatActionDelay*2 < loopcount && !gameOver) {
         lastEvent = loopcount;
         if(mode == GAME_MODE_SELECTION) {
             selectedPiece = selectionArea[selectedPieceIndex];
+            selectedPiece->model->translationX = -.9;
+            selectedPiece->model->translationZ = -.4;
+            selectedPiece->model->translationY = .69;
+            selectedPiece->model->rotationX = -10;
+            selectedPiece->model->rotationY = 190;
+            selectedPiece->model->scale(.5);
             selectionArea[selectedPieceIndex] = NULL;
-            selectNextPiece();
         }
         else {
             board.PlacePiece(selectedAvailableSquare.first, selectedAvailableSquare.second, selectedPiece);
+            pair<float, float> loc = BoardPositionToWorld(selectedAvailableSquare);
+
+            selectedPiece->model->translationX = loc.first;
+            selectedPiece->model->translationZ = loc.second;
+            selectedPiece->model->translationY = .25;
+            if(selectedPiece->getHeight()) {
+                selectedPiece->model->translationY += .1;
+            }
+            selectedPiece->model->rotationX = 0;
+            selectedPiece->model->rotationY = boardModel.rotationY;
+            selectedPiece->model->scale(2);
+            
+            if((gameOver = GameOver())) {
+                cout << "GAME OVER" << endl;
+                if(turn == PLAYER_1)
+                    cout << "PLAYER 1 WINS!!" << endl;
+                else
+                    cout << "PLAYER 2 WINS!!" << endl;
+            }
+            
             selectNextSquare();
+            selectNextPiece();
         }
         NextState();
     }
@@ -293,15 +327,34 @@ Game::selectPrevPiece() {
 void
 Game::selectNextSquare() {
     selectedAvailableSquare = board.previousAvailableLocation(selectedAvailableSquare);
-    playarea.Get("sun").translationX =.4*selectedAvailableSquare.second - .6;
-    playarea.Get("sun").translationZ =.4*selectedAvailableSquare.first - .47;
+    
+    pair<float, float> loc = BoardPositionToWorld(selectedAvailableSquare);
+    
+    playarea.Get("sun").translationX = loc.first;
+    playarea.Get("sun").translationZ = loc.second;
 }
 
 void
 Game::selectPrevSquare() {
     selectedAvailableSquare = board.nextAvailableLocation(selectedAvailableSquare);
-    playarea.Get("sun").translationX =.4*selectedAvailableSquare.second - .6;
-    playarea.Get("sun").translationZ =.4*selectedAvailableSquare.first - .47;
+    
+    pair<float, float> loc = BoardPositionToWorld(selectedAvailableSquare);
+    
+    playarea.Get("sun").translationX = loc.first;
+    playarea.Get("sun").translationZ = loc.second;
+}
+
+pair<float, float>
+Game::BoardPositionToWorld( pair<int, int> location ) {
+    float x = 0;
+    float z = 0;
+    
+    float betweenSquareCenters = .44;
+    
+    x = location.first * betweenSquareCenters - betweenSquareCenters*1.5;
+    z = location.second * betweenSquareCenters - betweenSquareCenters*1.5;
+    
+    return pair<float,float> (x, z);
 }
 
 bool
@@ -377,6 +430,7 @@ Game::GeneratePieces() {
                     p.setWeapon(weapon);
                     p.setHeight(height);
                     p.setColor(color);
+                    p.setModel( &(playarea.Get("wizard" + p.attrStr() )) );
                     allpieces.push_back( p );
                 }
             }
@@ -499,6 +553,19 @@ Game::setDefaultTextureSettings() {
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_LIGHTING);
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    
+    // Lighting
+    glEnable(GL_LIGHTING);
+    GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; //Color(0.2, 0.2, 0.2)
+    
+    glEnable(GL_LIGHT0);
+    glEnable(GL_NORMALIZE);
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+    
+    GLfloat lightColor0[] = {0.5f, 0.5f, 0.5f, 1.0f}; //Color (0.5, 0.5, 0.5)
+    GLfloat lightPos0[] = {4.0f, 0.0f, 8.0f, 1.0f}; //Positioned at (4, 0, 8)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+
 }

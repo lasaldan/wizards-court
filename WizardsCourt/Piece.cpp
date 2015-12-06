@@ -10,7 +10,8 @@
 #include "Piece.h"
 #include <iostream>
 
-Piece::Piece() {}
+Piece::Piece(){
+}
 
 Piece::Piece(int head, int weap, int h, int c) {
     headwear = head;
@@ -54,6 +55,11 @@ Piece::getDefinition() {
     return (headwear + (weapon << 1) + (height << 2) + (color << 3));
 }
 
+Item*
+Piece::getModel() {
+    return model;
+}
+
 void
 Piece::setHeadwear(int h) {
     headwear = h;
@@ -78,6 +84,11 @@ Piece::setHeight(int h) {
     generateAttrString();
 }
 
+void
+Piece::setModel(Item * m) {
+    model = m;
+}
+
 int
 Piece::attr() {
     return attributes;
@@ -86,9 +97,10 @@ Piece::attr() {
 std::string
 Piece::attrStr() {
     std::string r;
-    while(attributes!=0) {r=(attributes%2==0 ?"0":"1")+r; attributes/=2;}
+    int t = attributes;
+    while(t!=0) {r=(t%2==0 ?"0":"1")+r; t/=2;}
     if(r.length() == 7) r = "0" + r;
-    std::cout << attributes << "=" << r << std::endl;
+    //std::cout << attributes << "=" << r << std::endl;
     return r;
 }
 

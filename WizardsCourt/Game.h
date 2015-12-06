@@ -48,6 +48,7 @@ private:
     int mode;
     int lastEvent;
     int repeatActionDelay;
+    bool gameOver;
     
     SDL_Window* viewport;
     SDL_GLContext context;
@@ -83,6 +84,7 @@ private:
     void selectNextSquare();
     void selectPrevSquare();
     
+    std::pair<float, float> BoardPositionToWorld( std::pair<int, int> );
     std::pair<int,int> selectedAvailableSquare;
 };
 

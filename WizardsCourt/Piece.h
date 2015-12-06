@@ -9,6 +9,7 @@
 #ifndef __WizardsCourt__Piece__
 #define __WizardsCourt__Piece__
 
+#include "Item.h"
 #include <stdio.h>
 #include <string>
 
@@ -34,14 +35,17 @@ private:
 public:
     Piece();
     Piece(int headwear, int weapon, int height, int color);
+    Item* model;
     int getHeadwear();
     int getWeapon();
     int getHeight();
     int getColor();
+    Item* getModel();
     void setHeadwear(int);
     void setWeapon(int);
     void setHeight(int);
     void setColor(int);
+    void setModel(Item*);
     void print();
     void generateAttrString();
     int attr();
