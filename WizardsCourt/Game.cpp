@@ -503,8 +503,8 @@ Game::LoadAssets(string filename, Scene& scene) {
     for (auto& it: assets.GetModels()) {
         Item temp = Item();
         parser.parseFile((RESOURCE_ROOT + it.second), &temp);
-//        int texId = textures.at(it.first);
-//        temp.SetTexture(texId);
+        int texId = textures.at(it.first);
+        temp.SetTexture(texId);
 //        temp.scale(1);
 //        temp.translate(0,0,0);
 //        temp.rotateX(0);
