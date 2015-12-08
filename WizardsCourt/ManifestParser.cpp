@@ -49,7 +49,7 @@ void ManifestParser::parseFile(string path) {
     {
         while ( getline (objFile, buffer) )
         {
-            if(buffer[0] == '#') // ignore comments
+            if(buffer[0] == '#' || buffer.length() == 0) // ignore comments and blank lines
                 continue;
             
             parseLine(buffer);
