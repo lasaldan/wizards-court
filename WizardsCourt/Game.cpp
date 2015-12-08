@@ -475,7 +475,7 @@ Game::SetupView() {
 //    DGL::translateZ(1);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(50.0, 4.0/3.0, .001, 50.0);
+    gluPerspective(50.0, 4.0/3.0, .5, 4.5);
     
     lookAtPieces();
 }
