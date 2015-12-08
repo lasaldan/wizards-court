@@ -66,7 +66,7 @@ wizard01101010 models/wizard_1001.obj textures/white_cartoon_lo_poly.png
 
 
 # simple selection indicator
-sun models/plane.obj textures/green_sun.png
+sun models/diamond.obj textures/purple.png
 
 
 # Shelf to hold the unused pieces

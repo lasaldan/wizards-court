@@ -49,6 +49,7 @@ private:
     int lastEvent;
     int repeatActionDelay;
     bool gameOver;
+    float selectorOffset;
     
     SDL_Window* viewport;
     SDL_GLContext context;

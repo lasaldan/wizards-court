@@ -25,6 +25,7 @@ Game::Game() {
     lastEvent = 0;
     repeatActionDelay = 3;
     gameOver = false;
+    selectorOffset = 0;
 }
 
 
@@ -116,8 +117,8 @@ Game::InitializeScene() {
     shelf.scale(.075);
     shelf.translateZ(1.9);
     shelf.rotateY(180);
-    sun.translateY(.02);
-    sun.scale(.4);
+    sun.translateY(.2);
+    sun.scale(.15);
 }
 
 
@@ -187,6 +188,7 @@ void Game::Update() {
     DGL::setMode( MODEL );
     
     Item& boardModel = playarea.Get("board");
+    Item& sun = playarea.Get("sun");
     
     int dpadDir = gamepad.dpadDirection();
         
@@ -265,6 +267,10 @@ void Game::Update() {
         }
         NextState();
     }
+    
+    selectorOffset = sin((float)loopcount / 10) / 12;
+    sun.translationY = .2 + selectorOffset;
+    
 }
 
 void
@@ -539,7 +545,7 @@ Game::setDefaultTextureSettings() {
 
     glEnable(GL_LIGHTING);
 
-    //glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
     glEnable(GL_NORMALIZE);
     glShadeModel(GL_SMOOTH);
