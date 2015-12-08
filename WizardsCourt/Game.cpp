@@ -105,37 +105,9 @@ Game::InitializeScene() {
         
         xpos = i % 8;
         ypos = i / 8;
-        
-        //selectionArea.push_back(&piece);
     }
     
     selectNextSquare();
-    
-    /*
- Set GL_LIGHT_0's position to something like 45 degrees to the 'vertical'. Coordinate (1,1,0) should work nicely in most cases.
-     Set GL_LIGHT_0's Ambient color to 0,0,0,1
-     Set GL_LIGHT_0's Diffuse color to 1,1,1,1
-     Set GL_LIGHT_0's Specular color to 1,1,1,1
-     Set the glLightModel's global ambient to 0.2,0.2,0.2,1 (this is the default).
-     Don't set any other glLight or glLightModel options - just let them default.
-     Enable GL_LIGHTING and GL_LIGHT_0.
-     Enable GL_COLOR_MATERIAL and set glColorMaterial to GL_AMBIENT_AND_DIFFUSE. This means that glMaterial will control the polygon's specular and emission colours and the ambient and diffuse will both be set using glColor.
-     Set the glMaterial's Specular colour to 1,1,1,1
-     Set the glMaterial's Emission colour to 0,0,0,1
-     Set the glColor to whatever colour you want each polygon to basically appear to be. That sets the Ambient and Diffuse to the same value which is what you generally want.
-     */
-    
-//    GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
-//    GLfloat light_ambient[] = { 1.0, 0.0, 0.0, 0.0 };
-//    
-//    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-//    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-//    
-//    glEnable(GL_LIGHTING);
-//    glEnable(GL_LIGHT0);
-//    glEnable(GL_DEPTH_TEST);
-
-
     
     Item& board = playarea.Get("board");
     Item& shelf = playarea.Get("shelf");
@@ -144,7 +116,6 @@ Game::InitializeScene() {
     shelf.scale(.075);
     shelf.translateZ(1.9);
     shelf.rotateY(180);
-    //sun.translateY(.07);
     sun.translateY(.02);
     sun.scale(.4);
 }
@@ -532,7 +503,13 @@ Game::LoadAssets(string filename, Scene& scene) {
     for (auto& it: assets.GetModels()) {
         Item temp = Item();
         parser.parseFile((RESOURCE_ROOT + it.second), &temp);
-        temp.SetTexture(textures.at(it.first));
+//        int texId = textures.at(it.first);
+//        temp.SetTexture(texId);
+//        temp.scale(1);
+//        temp.translate(0,0,0);
+//        temp.rotateX(0);
+//        temp.rotateY(0);
+//        temp.rotateZ(0);
         scene.AddItem(it.first, temp);
     }
     
@@ -551,21 +528,66 @@ Game::setDefaultTextureSettings() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_CULL_FACE);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+//    glEnable(GL_BLEND);
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
     
     // Lighting
-    glEnable(GL_LIGHTING);
     GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; //Color(0.2, 0.2, 0.2)
-    
-    glEnable(GL_LIGHT0);
-    glEnable(GL_NORMALIZE);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+
+    glEnable(GL_LIGHTING);
+
+    //glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_NORMALIZE);
+    glShadeModel(GL_SMOOTH);
     
-    GLfloat lightColor0[] = {0.5f, 0.5f, 0.5f, 1.0f}; //Color (0.5, 0.5, 0.5)
-    GLfloat lightPos0[] = {4.0f, 0.0f, 8.0f, 1.0f}; //Positioned at (4, 0, 8)
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE ) ;
+    
+    GLfloat qaBlack[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat qaGreen[] = {0.0, 1.0, 0.0, 1.0};
+    GLfloat qaWhite[] = {1.0, 1.0, 1.0, 1.0};
+    glMaterialfv(GL_FRONT, GL_AMBIENT, qaGreen);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, qaGreen);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, qaWhite);
+    glMaterialf(GL_FRONT, GL_SHININESS, 60.0);
+    // global normal
+    glNormal3f(0.0, 0.0, 1.0);
+
+    
+    /*
+    glMateri
+    
+    Set the glMaterial's Specular colour to 1,1,1,1
+    Set the glMaterial's Emission colour to 0,0,0,1
+    Set the glColor
+     */
+    
+    // Light 0 = piece selection indicator
+    // Light 1 = board illumination spot
+    GLfloat lightColor0[] = {0.7f, 0.7f, 0.7f, 1.0f}; //Color (0.5, 0.5, 0.5)
+    GLfloat lightPos0[] = {0.0f, .1f, 0.0f, 1.0f};
+    
+    GLfloat lightPos1[] = {0.0f, 4.0f, 0.0f, 1.0f};
+    GLfloat boardPos[] = {0.0f, 0.4f, -4.0f}; //
+    GLfloat origin[] = {0.0f, 1.0f, 0.0f};
+    
+    
+//    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 5.0);
+//    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 2.0);
+//    glLightfv(GL_LIGHT0,GL_SPOT_DIRECTION, boardPos);
+//
+//    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
+//    glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+    
+    glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 50.0);
+    glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 2.0);
+    glLightfv(GL_LIGHT1,GL_SPOT_DIRECTION, origin);
+    
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor0);
+    glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
 
 }
