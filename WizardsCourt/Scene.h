@@ -23,7 +23,7 @@ public:
     Scene();
     std::map<std::string, Item> Items;
     Item& Get(std::string);
-    Item& AddItem(std::string, Item);
+    Item& AddItem(std::string, Item&);
 };
 
 #endif /* defined(__wizards_court__Scene__) */

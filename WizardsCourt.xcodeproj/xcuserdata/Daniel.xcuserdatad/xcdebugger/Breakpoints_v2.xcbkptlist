@@ -430,9 +430,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "136"
-            endingLineNumber = "136"
-            landmarkName = "ObjParser::parseFace(string line)"
-            landmarkType = "5">
+            endingLineNumber = "136">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -446,9 +444,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "ObjParser::parseFace(string line)"
-            landmarkType = "5">
+            endingLineNumber = "161">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -619,7 +615,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "25"
             endingLineNumber = "25"
-            landmarkName = "Scene::AddItem(string name, Item item)"
+            landmarkName = "Scene::AddItem(string name, Item&amp; item)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -635,7 +631,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "26"
             endingLineNumber = "26"
-            landmarkName = "Scene::AddItem(string name, Item item)"
+            landmarkName = "Scene::AddItem(string name, Item&amp; item)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -651,7 +647,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "27"
             endingLineNumber = "27"
-            landmarkName = "Scene::AddItem(string name, Item item)"
+            landmarkName = "Scene::AddItem(string name, Item&amp; item)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -683,7 +679,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "104"
             endingLineNumber = "104"
-            landmarkName = "ObjParser::parseNormal(string line)"
+            landmarkName = "ObjParser::parseFace(string line)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -699,7 +695,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "105"
             endingLineNumber = "105"
-            landmarkName = "ObjParser::parseNormal(string line)"
+            landmarkName = "ObjParser::parseFace(string line)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -715,7 +711,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "53"
             endingLineNumber = "53"
-            landmarkName = "ObjParser::parseFile(string path, Item* i)"
+            landmarkName = "ObjParser::parseVertex(string line)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -756,12 +752,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WizardsCourt/Item.cpp"
-            timestampString = "471287563.904197"
+            timestampString = "471324951.930045"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "Item::AddFace(Face f)"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "Item::GetVertices()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -788,12 +784,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WizardsCourt/Item.cpp"
-            timestampString = "471287603.43109"
+            timestampString = "471324951.930045"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "Item::AddVertex(Vertex v)"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "Item::rotateX(float degrees)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WizardsCourt/Item.cpp"
+            timestampString = "471324951.930045"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "Item::translateX(float distance)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WizardsCourt/Game.cpp"
+            timestampString = "471292901.101337"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "513"
+            endingLineNumber = "513"
+            landmarkName = "Game::LoadAssets(string filename, Scene&amp; scene)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WizardsCourt/Item.cpp"
+            timestampString = "471324229.9346"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "Item::Item(const Item &amp; other)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WizardsCourt/Item.cpp"
+            timestampString = "471324951.930045"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "Item::operator=(const Item&amp; other)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -804,12 +864,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WizardsCourt/Item.cpp"
-            timestampString = "471287605.865643"
+            timestampString = "471324964.198887"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "Item::translate(float x, float y, float z)"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "Item::operator=(const Item&amp; other)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -22,6 +22,47 @@ Item::Item() {
     translationY = 0;
     translationZ = 0;
 }
+Item::Item(const Item & other) :
+    normals(other.normals),
+    vertices(other.vertices),
+    textureCoordinates(other.textureCoordinates),
+    faces(other.faces)
+    {
+    rotationZ = other.rotationZ;
+    rotationY = other.rotationY;
+    rotationX = other.rotationX;
+    
+    translationX = other.translationX;
+    translationY = other.translationY;
+    translationZ = other.translationZ;
+        
+    scalationX = other.scalationX;
+    scalationY = other.scalationY;
+    scalationZ = other.scalationZ;
+        
+    texture = other.texture;
+}
+Item& Item::operator=(const Item& other) {
+    normals = other.normals;
+    vertices = other.vertices;
+    textureCoordinates = other.textureCoordinates;
+    faces = other.faces;
+    
+    rotationZ = other.rotationZ;
+    rotationY = other.rotationY;
+    rotationX = other.rotationX;
+    
+    translationX = other.translationX;
+    translationY = other.translationY;
+    translationZ = other.translationZ;
+    
+    scalationX = other.scalationX;
+    scalationY = other.scalationY;
+    scalationZ = other.scalationZ;
+    
+    texture = other.texture;
+    return *this;
+}
 
 void Item::AddVertex(Vertex v){
     vertices.push_back(v);

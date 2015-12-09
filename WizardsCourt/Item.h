@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <vector>
 #include "Vertex.h"
+#include "Vector.h"
 #include "TextureCoordinate.h"
 #include "Face.h"
 
@@ -20,6 +21,7 @@ public:
     std::vector<Vertex> vertices;
     std::vector<TextureCoordinate> textureCoordinates;
     std::vector<Face> faces;
+    std::vector<Vector> normals;
     
     float rotationX;
     float rotationY;
@@ -34,6 +36,8 @@ public:
     unsigned int texture;
     
     Item();
+    Item(const Item &);
+    Item& operator=(const Item& other);
     void rotateX(float);
     void rotateY(float);
     void rotateZ(float);

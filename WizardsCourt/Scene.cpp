@@ -21,7 +21,7 @@ Item& Scene::Get(string i) {
 }
 
 
-Item& Scene::AddItem(string name, Item item) {
+Item& Scene::AddItem(string name, Item& item) {
     Items.insert( pair<string, Item>(name, item) );
     return Items.at(name);
 }
