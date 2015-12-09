@@ -53,6 +53,7 @@ public:
     void scaleZ(float);
     
     void AddVertex(Vertex);
+    void AddNormal(Vector);
     void AddFace(Face);
     void AddTextureCoordinate(TextureCoordinate);
     void SetTexture(unsigned int);

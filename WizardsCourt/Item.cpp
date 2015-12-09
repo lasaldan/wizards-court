@@ -69,6 +69,10 @@ void Item::AddVertex(Vertex v){
 
 }
 
+void Item::AddNormal(Vector v) {
+    normals.push_back(v);
+}
+
 void Item::rotateX(float degrees) {
     rotationX += degrees;
 }

@@ -18,3 +18,7 @@ void Face::addVertex(Vertex v) {
 void Face::addTextureCoordinate(TextureCoordinate t){
     textureCoordinates.push_back(t);
 }
+
+void Face::addNormal(Vector v) {
+    normals.push_back(v);
+}

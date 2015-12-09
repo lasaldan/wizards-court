@@ -22,6 +22,7 @@ private:
     Vertex parseVertex(std::string);
     TextureCoordinate parseTextureCoordinate(std::string);
     Face parseFace(std::string);
+    Vector parseNormal(std::string);
 };
 
 #endif /* defined(__wizards_court__ObjReader__) */

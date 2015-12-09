@@ -37,6 +37,10 @@ void ObjParser::parseFile(string path, Item* i) {
             if(buffer[0] == 'v' && buffer[1] == 't')
                 item->AddTextureCoordinate(parseTextureCoordinate(buffer));
             
+            // Look for a Normal on this line
+            if(buffer[0] == 'v' && buffer[1] == 'n')
+                item->AddNormal(parseNormal(buffer));
+            
             // Look for a face definition on this line
             if(buffer[0] == 'f' && buffer[1] == ' ')
                 item->AddFace(parseFace(buffer));
@@ -97,12 +101,40 @@ TextureCoordinate ObjParser::parseTextureCoordinate(string line) {
     return t;
 }
 
+Vector ObjParser::parseNormal(string line) {
+    float x, y, z;
+    size_t start, end;
+    
+    start = line.find(" ");
+    line[start++] = 'X';
+    end = line.find(" ");
+    
+    x = stof(line.substr(start, end-start));
+    
+    start = end;
+    line[start++] = 'X';
+    end = line.find(" ");
+    
+    y = stof(line.substr(start, end-start));
+    
+    start = end+1;
+    end = line.length();
+    
+    z = stof(line.substr(start, end-start));
+    
+    //cout << "normal [ " << x << "," << y << "," << z << "]" << endl;
+    Vector v = Vector(-x, -y, -z);
+    return v;
+}
+
 Face ObjParser::parseFace(string line) {
     
+    
     Face f = Face();
+    line = line + " ";
     
     while (line.find("/") != string::npos) {
-        int vert, texCoord;
+        int vert, texCoord, normal;
         size_t start, end;
         
         // set vert and texCoord
@@ -110,19 +142,24 @@ Face ObjParser::parseFace(string line) {
         line[start++] = 'X';
         end = line.find("/");
         
-        vert = stof(line.substr(start, end-start));
+        vert = stoi(line.substr(start, end-start));
         
         line[end++] = 'X';
         start = end;
         end = line.find("/");
         line[end] = 'X';
         
-        texCoord = stof(line.substr(start, end-start));
+        texCoord = stoi(line.substr(start, end-start));
         
+        line[end++] = 'X';
+        start = end;
+        end = line.find(" ");
+        
+        normal = stoi(line.substr(start, end-start));
+        
+        f.addNormal(item->normals[normal-1]);
         f.addVertex(item->vertices[vert-1]);
         f.addTextureCoordinate(item->textureCoordinates[texCoord-1]);
     }
-    
-    
     return f;
 }

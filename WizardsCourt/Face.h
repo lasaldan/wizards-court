@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "Vertex.h"
+#include "Vector.h"
 #include "TextureCoordinate.h"
 
 #include <vector>
@@ -19,8 +20,10 @@ class Face {
 public:
     Face();
     std::vector<Vertex> vertices;
+    std::vector<Vector> normals;
     std::vector<TextureCoordinate> textureCoordinates;
     void addVertex(Vertex);
+    void addNormal(Vector);
     void addTextureCoordinate(TextureCoordinate);
 };
 
