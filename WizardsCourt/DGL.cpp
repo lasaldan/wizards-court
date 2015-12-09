@@ -411,7 +411,7 @@ DGL::drawFace(Face &face){
     
     for(int i = 0; i < face.vertices.size(); i ++) {
         glTexCoord2f(face.textureCoordinates[i].x, face.textureCoordinates[i].y);
-        //glNormal3f(face.normals[i].x, face.normals[i].y, face.normals[i].z);
+        glNormal3f(face.normals[i].x, face.normals[i].y, face.normals[i].z);
         Vertex transformed = transform( face.vertices[i] );
         glVertex3f(transformed.x, transformed.y, transformed.z);
         //cout << transformed.x << endl;

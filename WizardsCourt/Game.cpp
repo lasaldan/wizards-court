@@ -539,7 +539,7 @@ Game::setDefaultTextureSettings() {
     //glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
     
     // Lighting
-    GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; //Color(0.2, 0.2, 0.2)
+    GLfloat ambientColor[] = {0.4f, 0.4f, 0.4f, 1.0f}; //Color(0.2, 0.2, 0.2)
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 
@@ -547,7 +547,6 @@ Game::setDefaultTextureSettings() {
 
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
-    glEnable(GL_LIGHT2);
     glEnable(GL_NORMALIZE);
     glShadeModel(GL_SMOOTH);
     
@@ -560,21 +559,21 @@ Game::setDefaultTextureSettings() {
     glMaterialfv(GL_FRONT, GL_AMBIENT, qaGreen);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, qaGreen);
     glMaterialfv(GL_FRONT, GL_SPECULAR, qaWhite);
-    glMaterialf(GL_FRONT, GL_SHININESS, 60.0);
+    glMaterialf(GL_FRONT, GL_SHININESS, 20.0);
     // global normal
     //glNormal3f(0.0, 0.0, 1.0);
 
     // Light 0 = piece selection indicator
     // Light 1 = board illumination spot
     GLfloat lightColor0[] = {0.7f, 0.7f, 0.7f, 1.0f};
-    GLfloat lightPos0[] = {0.0f, 1.0f, 0.0f, 1.0f};
+    GLfloat lightPos0[] = {0.0f, -0.3f, 0.0f, 1.0f};
     
-    GLfloat lightPos1[] = {0.0f, 0.5f, 0.0f, 1.0f};
-    GLfloat boardPos[] = {0.0f, 0.0f, -1.0f};
+    GLfloat lightPos1[] = {0.0f, -0.5f, 0.0f, 1.0f};
+    GLfloat boardPos[] = {0.0f, -.5f, 0.0f};
     GLfloat origin[] = {0.0f, 0.0f, 1.0f};
     
     
-    glLightf(  GL_LIGHT0, GL_SPOT_CUTOFF,    20.0 );
+    glLightf(  GL_LIGHT0, GL_SPOT_CUTOFF,    6.0 );
     glLightf(  GL_LIGHT0, GL_SPOT_EXPONENT,  2.0 );
     //glLightfv( GL_LIGHT0, GL_SPOT_DIRECTION, boardPos );
     glLightfv( GL_LIGHT0, GL_DIFFUSE,        lightColor0 );

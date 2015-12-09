@@ -23,7 +23,7 @@ wizard10010101 models/wizard_1111.obj textures/blue_cartoon_lo_poly.png
 wizard10011001 models/wizard_1101.obj textures/blue_cartoon_lo_poly.png
 
 # Blue, Hood, Staff, Tall
-wizard10100101 models/wizard_1011.obj textures/blue_cartoon_lo_poly.png
+wizard10100101 models/wizard_1011_1.obj textures/blue_cartoon_lo_poly.png
 
 # Blue, Hood, Sword, Tall
 wizard10101001 models/wizard_1001.obj textures/blue_cartoon_lo_poly.png
@@ -35,7 +35,7 @@ wizard01010101 models/wizard_1111.obj textures/white_cartoon_lo_poly.png
 wizard01011001 models/wizard_1101.obj textures/white_cartoon_lo_poly.png
 
 # White, Hood, Staff, Tall
-wizard01100101 models/wizard_1011.obj textures/white_cartoon_lo_poly.png
+wizard01100101 models/wizard_1011_1.obj textures/white_cartoon_lo_poly.png
 
 # White, Hood, Sword, Tall
 wizard01101001 models/wizard_1001.obj textures/white_cartoon_lo_poly.png
@@ -47,7 +47,7 @@ wizard10010110 models/wizard_1111.obj textures/blue_cartoon_lo_poly.png
 wizard10011010 models/wizard_1101.obj textures/blue_cartoon_lo_poly.png
 
 # Blue, Hood, Staff, Short
-wizard10100110 models/wizard_1011.obj textures/blue_cartoon_lo_poly.png
+wizard10100110 models/wizard_1011_1.obj textures/blue_cartoon_lo_poly.png
 
 # Blue, Hood, Sword, Short
 wizard10101010 models/wizard_1001.obj textures/blue_cartoon_lo_poly.png
@@ -59,7 +59,7 @@ wizard01010110 models/wizard_1111.obj textures/white_cartoon_lo_poly.png
 wizard01011010 models/wizard_1101.obj textures/white_cartoon_lo_poly.png
 
 # White, Hood, Staff, Short
-wizard01100110 models/wizard_1011.obj textures/white_cartoon_lo_poly.png
+wizard01100110 models/wizard_1011_1.obj textures/white_cartoon_lo_poly.png
 
 # White, Hood, Sword, Short
 wizard01101010 models/wizard_1001.obj textures/white_cartoon_lo_poly.png
