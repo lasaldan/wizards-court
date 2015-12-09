@@ -573,7 +573,7 @@ Game::setDefaultTextureSettings() {
     GLfloat origin[] = {0.0f, 0.0f, 1.0f};
     
     
-    glLightf(  GL_LIGHT0, GL_SPOT_CUTOFF,    6.0 );
+    glLightf(  GL_LIGHT0, GL_SPOT_CUTOFF,    38.0 );
     glLightf(  GL_LIGHT0, GL_SPOT_EXPONENT,  2.0 );
     //glLightfv( GL_LIGHT0, GL_SPOT_DIRECTION, boardPos );
     glLightfv( GL_LIGHT0, GL_DIFFUSE,        lightColor0 );
