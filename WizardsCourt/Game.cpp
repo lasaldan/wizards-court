@@ -139,7 +139,7 @@ Game::InitializeScene() {
     win1.scale(.2);
     win2.scale(.2);
     
-    //audio.startMusic();
+    audio.startMusic();
 }
 
 
@@ -214,6 +214,8 @@ void Game::Update() {
     int dpadDir = gamepad.dpadDirection();
         
     if((dpadDir == 7 || gamepad.isButtonDown(4)) && lastEvent+repeatActionDelay < loopcount) {
+        audio.tick();
+
         lastEvent = loopcount;
         if(mode == GAME_MODE_SELECTION)
             selectNextPiece();
@@ -222,6 +224,8 @@ void Game::Update() {
         
     }
     else if((dpadDir == 3 || gamepad.isButtonDown(5)) && lastEvent+repeatActionDelay < loopcount) {
+        audio.tick();
+
         lastEvent = loopcount;
         if(mode == GAME_MODE_SELECTION)
             selectPrevPiece();
@@ -250,6 +254,7 @@ void Game::Update() {
     }
     
     if(gamepad.isButtonDown(1) && lastEvent+repeatActionDelay*2 < loopcount && !gameOver) {
+        audio.select();
         lastEvent = loopcount;
         if(mode == GAME_MODE_SELECTION) {
             selectedPiece = selectionArea[selectedPieceIndex];
@@ -269,6 +274,8 @@ void Game::Update() {
             selectedPiece->model->rotationY = boardModel.rotationY;
             
             if((gameOver = GameOver())) {
+                
+                audio.gameover();
                 
                 Item& win1 = playarea.Get("youwin1");
                 Item& win2 = playarea.Get("youwin2");
