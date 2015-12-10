@@ -21,6 +21,7 @@
 #include "ObjParser.h"
 #include "InputDevice.h"
 #include "DGL.h"
+//#include "SoundPlayer.h"
 
 #define GAME_MODE_PLACEMENT 0
 #define GAME_MODE_SELECTION 1
@@ -50,6 +51,8 @@ private:
     int repeatActionDelay;
     bool gameOver;
     float selectorOffset;
+    
+    //SoundPlayer audio;
     
     SDL_Window* viewport;
     SDL_GLContext context;

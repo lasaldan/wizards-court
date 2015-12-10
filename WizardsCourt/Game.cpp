@@ -139,7 +139,7 @@ Game::InitializeScene() {
     win1.scale(.2);
     win2.scale(.2);
     
-    
+    //audio.startMusic();
 }
 
 
@@ -614,7 +614,7 @@ Game::setDefaultTextureSettings() {
     //glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
     
     // Lighting
-    GLfloat ambientColor[] = {0.4f, 0.4f, 0.4f, 1.0f}; //Color(0.2, 0.2, 0.2)
+    GLfloat ambientColor[] = {0.5f, 0.5f, 0.5f, 1.0f}; //Color(0.2, 0.2, 0.2)
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 
