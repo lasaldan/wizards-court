@@ -109,16 +109,37 @@ Game::InitializeScene() {
     }
     
     selectNextSquare();
+    selectPrevPiece();
     
     Item& board = playarea.Get("board");
     Item& shelf = playarea.Get("shelf");
     Item& sun = playarea.Get("sun");
+    Item& player1Plaque = playarea.Get("plaque1");
+    Item& player2Plaque = playarea.Get("plaque2");
+    Item& win1 = playarea.Get("youwin1");
+    Item& win2 = playarea.Get("youwin2");
     board.scale(.075);
     shelf.scale(.075);
     shelf.translateZ(1.9);
     shelf.rotateY(180);
     sun.translateY(.2);
     sun.scale(.15);
+    
+    player1Plaque.scale(.05);
+    player2Plaque.scale(.05);
+    
+    player1Plaque.translateZ(-1.48);
+    player2Plaque.translateZ(-1.48);
+    
+    movePlaques();
+    
+    win1.translateY(10);
+    win2.translateY(10);
+    
+    win1.scale(.2);
+    win2.scale(.2);
+    
+    
 }
 
 
@@ -138,11 +159,11 @@ Game::NextState() {
         mode = GAME_MODE_SELECTION;
         lookAtPieces();
     }
-    
-    std::string m = (mode==GAME_MODE_SELECTION)?"Select a piece":"Place the piece";
-    std::string p = (turn==PLAYER_1)?"Player 1":"Player 2";
-    
-    cout << p << " -> " << m << endl;
+//    
+//    std::string m = (mode==GAME_MODE_SELECTION)?"Select a piece":"Place the piece";
+//    std::string p = (turn==PLAYER_1)?"Player 1":"Player 2";
+//    
+//    cout << p << " -> " << m << endl;
 }
 
 
@@ -232,13 +253,8 @@ void Game::Update() {
         lastEvent = loopcount;
         if(mode == GAME_MODE_SELECTION) {
             selectedPiece = selectionArea[selectedPieceIndex];
-            selectedPiece->model->translationX = -.9;
-            selectedPiece->model->translationZ = -.4;
-            selectedPiece->model->translationY = .69;
-            selectedPiece->model->rotationX = -10;
-            selectedPiece->model->rotationY = 190;
-            selectedPiece->model->scale(.5);
             selectionArea[selectedPieceIndex] = NULL;
+            movePlaques();
         }
         else {
             board.PlacePiece(selectedAvailableSquare.first, selectedAvailableSquare.second, selectedPiece);
@@ -250,38 +266,75 @@ void Game::Update() {
             if(selectedPiece->getHeight()) {
                 selectedPiece->model->translationY += .1;
             }
-            selectedPiece->model->rotationX = 0;
             selectedPiece->model->rotationY = boardModel.rotationY;
-            selectedPiece->model->scale(2);
             
             if((gameOver = GameOver())) {
-                cout << "GAME OVER" << endl;
-                if(turn == PLAYER_1)
-                    cout << "PLAYER 1 WINS!!" << endl;
-                else
-                    cout << "PLAYER 2 WINS!!" << endl;
+                
+                Item& win1 = playarea.Get("youwin1");
+                Item& win2 = playarea.Get("youwin2");
+                
+                if(turn == PLAYER_1) {
+                    win1.translationX = -1.47;
+                    win1.translationY = .2;
+                    win1.translationZ = -1.4;
+                }
+                else {
+                    
+                    win2.translationX = -1.47;
+                    win2.translationY = .2;
+                    win2.translationZ = -1.4;
+                }
             }
             
             selectNextSquare();
             selectNextPiece();
         }
         NextState();
+        movePlaques();
     }
     
     selectorOffset = sin((float)loopcount / 10) / 12;
-    sun.translationY = .2 + selectorOffset;
+    sun.translationY = .2 + selectorOffset + ( 10 * ((mode == GAME_MODE_SELECTION)? 1 : 0));
+    
+    if(winningPieces.size()) {
+        int i = 0;
+        for(i = 0; i < 4; i++) {
+            winningPieces[i]->model->translationY = selectorOffset + .35;
+            if(winningPieces[i]->getHeight()) {
+                winningPieces[i]->model->translationY += .1;
+            }
+        }
+    }
     
 }
 
 void
+Game::movePlaques() {
+    
+    Item& player1Plaque = playarea.Get("plaque1");
+    Item& player2Plaque = playarea.Get("plaque2");
+    Item& plaque = (turn == PLAYER_1)? player1Plaque : player2Plaque;
+    Item& plaqueOther = (turn == PLAYER_2)? player1Plaque : player2Plaque;
+    
+    float yOffset = (selectedPieceIndex < 8)? -.025 : .87;
+    plaque.translationY = yOffset;
+    
+    float xOffset = (7 - (selectedPieceIndex % 8)) / 2.5 - 1.4;
+    plaque.translationX = xOffset;
+    
+    plaque.translationZ = (-1.48);
+    plaqueOther.translateZ(-2);
+}
+
+void
 Game::selectNextPiece() {
+    
+    
     for(int i = 0; i < 16; i++) {
         selectedPieceIndex = (++selectedPieceIndex % 16);
         if(selectionArea[selectedPieceIndex] != NULL) {
             selectedPiece = selectionArea[selectedPieceIndex];
-            cout << "HIGHLIGHTED:" << endl;
-            selectedPiece -> print();
-            cout << endl;
+            movePlaques();
             break;
         }
     }
@@ -293,9 +346,7 @@ Game::selectPrevPiece() {
         selectedPieceIndex = (--selectedPieceIndex < 0)? 15 : selectedPieceIndex;
         if(selectionArea[selectedPieceIndex] != NULL) {
             selectedPiece = selectionArea[selectedPieceIndex];
-            cout << "HIGHLIGHTED:" << endl;
-            selectedPiece -> print();
-            cout << endl;
+            movePlaques();
             break;
         }
     }
@@ -347,8 +398,14 @@ Game::GameOver() {
             if( board.GetPiece(0,i)->attr() &
                 board.GetPiece(1,i)->attr() &
                 board.GetPiece(2,i)->attr() &
-                board.GetPiece(3,i)->attr() )
+                board.GetPiece(3,i)->attr() ) {
+                
+                winningPieces.push_back(board.GetPiece(0,i));
+                winningPieces.push_back(board.GetPiece(1,i));
+                winningPieces.push_back(board.GetPiece(2,i));
+                winningPieces.push_back(board.GetPiece(3,i));
                 return true;
+            }
         }
         
         // Check rows
@@ -359,8 +416,14 @@ Game::GameOver() {
             if( board.GetPiece(i,0)->attr() &
                 board.GetPiece(i,1)->attr() &
                 board.GetPiece(i,2)->attr() &
-                board.GetPiece(i,3)->attr() )
+                board.GetPiece(i,3)->attr() ) {
+                
+                winningPieces.push_back(board.GetPiece(i,0));
+                winningPieces.push_back(board.GetPiece(i,1));
+                winningPieces.push_back(board.GetPiece(i,2));
+                winningPieces.push_back(board.GetPiece(i,3));
                 return true;
+            }
         }
     }
     
@@ -372,8 +435,14 @@ Game::GameOver() {
         if( board.GetPiece(0,0)->attr() &
             board.GetPiece(1,1)->attr() &
             board.GetPiece(2,2)->attr() &
-            board.GetPiece(3,3)->attr() )
+            board.GetPiece(3,3)->attr() ) {
+            
+            winningPieces.push_back(board.GetPiece(0,0));
+            winningPieces.push_back(board.GetPiece(1,1));
+            winningPieces.push_back(board.GetPiece(2,2));
+            winningPieces.push_back(board.GetPiece(3,3));
             return true;
+        }
     }
     
     if( board.GetPiece(0,3) != NULL &&
@@ -383,8 +452,14 @@ Game::GameOver() {
         if( board.GetPiece(0,3)->attr() &
             board.GetPiece(1,2)->attr() &
             board.GetPiece(2,1)->attr() &
-            board.GetPiece(3,0)->attr() )
+            board.GetPiece(3,0)->attr() ) {
+            
+            winningPieces.push_back(board.GetPiece(0,3));
+            winningPieces.push_back(board.GetPiece(1,2));
+            winningPieces.push_back(board.GetPiece(2,1));
+            winningPieces.push_back(board.GetPiece(3,0));
             return true;
+        }
     }
 
     return false;
@@ -546,7 +621,7 @@ Game::setDefaultTextureSettings() {
     glEnable(GL_LIGHTING);
 
     glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
+    //glEnable(GL_LIGHT1);
     glEnable(GL_NORMALIZE);
     glShadeModel(GL_SMOOTH);
     

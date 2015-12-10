@@ -454,6 +454,9 @@ DGL::drawScene(Scene &scene){
     int preMode = mode;
     mode = MODEL;
     
+//    GLfloat lightPos0[] = {0.0f, -0.3f, 0.0f, 1.0f};
+//    glLightfv( GL_LIGHT1, GL_POSITION,       lightPos0 );
+    
     for (auto& item: scene.Items) {
         Item obj = item.second;
         

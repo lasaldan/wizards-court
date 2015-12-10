@@ -58,6 +58,7 @@ private:
     Board board;
     std::vector< Piece* > selectionArea;
     std::vector< Piece > pieces;
+    std::vector< Piece* > winningPieces;
     InputDevice gamepad;
     
 public:
@@ -84,6 +85,7 @@ private:
     void selectPrevPiece();
     void selectNextSquare();
     void selectPrevSquare();
+    void movePlaques();
     
     std::pair<float, float> BoardPositionToWorld( std::pair<int, int> );
     std::pair<int,int> selectedAvailableSquare;

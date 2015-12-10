@@ -71,3 +71,15 @@ sun models/diamond.obj textures/purple.png
 
 # Shelf to hold the unused pieces
 shelf models/shelf_lo_poly.obj textures/shelf_cartoon.png
+
+# Plaque to indicate turn
+plaque1 models/plaque_lo_poly.obj textures/red_plaque.png
+
+# Plaque to indicate turn
+plaque2 models/plaque_lo_poly.obj textures/orange_plaque.png
+
+# You Win Red
+youwin1 models/you_win_lo_poly.obj textures/red_plaque.png
+
+# You Win Orange
+youwin2 models/you_win_lo_poly.obj textures/orange_plaque.png
