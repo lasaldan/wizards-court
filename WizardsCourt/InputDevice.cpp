@@ -86,7 +86,7 @@ InputDevice::HandleCurrentEvent() {
     else if(event.type == SDL_JOYBUTTONUP)
         releaseButton();
     
-    else if(event.type == SDL_QUIT)
+    else if(event.type == SDL_QUIT || event.type == SDL_KEYDOWN)
         quit = true;
     
     else if(event.type == SDL_JOYAXISMOTION && (event.jaxis.axis == LEFT_JOY_H || event.jaxis.axis == LEFT_JOY_V))
