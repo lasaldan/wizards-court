@@ -31,21 +31,21 @@
 //        success = false;
 //    }
 //    
-//    _tick = Mix_LoadWAV( "sound/bg.wav" );
+//    _tick = Mix_LoadWAV( "sound/tick.wav" );
 //    if( _tick == NULL )
 //    {
 //        printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
 //        success = false;
 //    }
 //    
-//    _select = Mix_LoadWAV( "sound/bg.wav" );
+//    _select = Mix_LoadWAV( "sound/tick.wav" );
 //    if( _select == NULL )
 //    {
 //        printf( "Failed to load high sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
 //        success = false;
 //    }
 //    
-//    _gameover = Mix_LoadWAV( "sound/bg.wav" );
+//    _gameover = Mix_LoadWAV( "sound/cheering.wav" );
 //    if( _gameover == NULL )
 //    {
 //        printf( "Failed to load medium sound effect! SDL_mixer Error: %s\n", Mix_GetError() );

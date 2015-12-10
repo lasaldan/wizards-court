@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6527802C1C196DEA003AB8B4 /* SoundPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6527802A1C196DEA003AB8B4 /* SoundPlayer.cpp */; };
 		65B3FF0D1BD8990E00873E14 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF0C1BD8990E00873E14 /* main.cpp */; };
 		65B3FF181BD8999C00873E14 /* DGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF161BD8999C00873E14 /* DGL.cpp */; };
 		65B3FF2D1BD899CA00873E14 /* Face.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65B3FF191BD899CA00873E14 /* Face.cpp */; };
@@ -44,6 +45,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6527802A1C196DEA003AB8B4 /* SoundPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundPlayer.cpp; sourceTree = "<group>"; };
+		6527802B1C196DEA003AB8B4 /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundPlayer.h; sourceTree = "<group>"; };
 		65B3FF091BD8990E00873E14 /* WizardsCourt */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WizardsCourt; sourceTree = BUILT_PRODUCTS_DIR; };
 		65B3FF0C1BD8990E00873E14 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		65B3FF131BD8992300873E14 /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = models; sourceTree = "<group>"; };
@@ -79,7 +82,6 @@
 		65B3FF431BD8A16B00873E14 /* libSOIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSOIL.dylib; path = ../libSOIL/libSOIL.dylib; sourceTree = "<group>"; };
 		65B3FF461BD8A1A700873E14 /* SOIL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SOIL.h; sourceTree = "<group>"; };
 		65B3FF471BD8A2F800873E14 /* manifest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = manifest; sourceTree = "<group>"; };
-		65B3FF4B1BD8BD1700873E14 /* wizards-court */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "wizards-court"; path = "../../wizards-court/wizards-court"; sourceTree = "<group>"; };
 		65B3FF4C1BD8BD6D00873E14 /* DGLCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DGLCamera.cpp; sourceTree = "<group>"; };
 		65B3FF4D1BD8BD6D00873E14 /* DGLCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGLCamera.h; sourceTree = "<group>"; };
 		65DC8A291BF65A160009C5DC /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputDevice.cpp; sourceTree = "<group>"; };
@@ -139,13 +141,14 @@
 				65B3FF0C1BD8990E00873E14 /* main.cpp */,
 				65B3FF161BD8999C00873E14 /* DGL.cpp */,
 				65B3FF171BD8999C00873E14 /* DGL.h */,
-				65B3FF4B1BD8BD1700873E14 /* wizards-court */,
 				65B3FF191BD899CA00873E14 /* Face.cpp */,
 				65B3FF1A1BD899CA00873E14 /* Face.h */,
 				65B3FF4C1BD8BD6D00873E14 /* DGLCamera.cpp */,
 				65B3FF4D1BD8BD6D00873E14 /* DGLCamera.h */,
 				65DC8A2A1BF65A160009C5DC /* InputDevice.h */,
 				65DC8A291BF65A160009C5DC /* InputDevice.cpp */,
+				6527802A1C196DEA003AB8B4 /* SoundPlayer.cpp */,
+				6527802B1C196DEA003AB8B4 /* SoundPlayer.h */,
 				65DC8A301BF690F20009C5DC /* Piece.h */,
 				65DC8A2F1BF690F20009C5DC /* Piece.cpp */,
 				65DC8A2D1BF690940009C5DC /* Board.h */,
@@ -243,6 +246,7 @@
 				65B3FF361BD899CA00873E14 /* Vertex.cpp in Sources */,
 				65DC8A2B1BF65A160009C5DC /* InputDevice.cpp in Sources */,
 				65B3FF4E1BD8BD6D00873E14 /* DGLCamera.cpp in Sources */,
+				6527802C1C196DEA003AB8B4 /* SoundPlayer.cpp in Sources */,
 				65B3FF321BD899CA00873E14 /* ObjParser.cpp in Sources */,
 				65B3FF301BD899CA00873E14 /* ManifestParser.cpp in Sources */,
 			);
